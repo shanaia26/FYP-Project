@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/register_background">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create a New Account"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:translationX="55dp"
+        android:translationY="40dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register for a new account to get started"
+        android:textSize="20sp"
+        android:translationX="30dp"
+        android:translationY="75dp" />
+
+    <EditText
+        android:id="@+id/first_name"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="First Name:"
+        android:textColorHint="@color/black_60"
+        android:inputType="textPersonName"
+        android:translationX="30dp"
+        android:translationY="265dp" />
+
+    <EditText
+        android:id="@+id/last_name"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Last Name:"
+        android:textColorHint="@color/black_60"
+        android:inputType="textPersonName"
+        android:translationX="30dp"
+        android:translationY="325dp" />
+
+    <EditText
+        android:id="@+id/address"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Full Address: "
+        android:textColorHint="@color/black_60"
+        android:inputType="textPersonName"
+        android:translationX="30dp"
+        android:translationY="382dp" />
+
+    <EditText
+        android:id="@+id/email_address"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Email Address:"
+        android:textColorHint="@color/black_60"
+        android:inputType="textPersonName"
+        android:translationX="30dp"
+        android:translationY="440dp" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Password:"
+        android:textColorHint="@color/black_60"
+        android:inputType="textPersonName"
+        android:translationX="30dp"
+        android:translationY="495dp" />
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:background="@drawable/rounded_corners"
+        android:fontFamily="sans-serif-medium"
+        android:text="REGISTER"
+        android:textSize="15sp"
+        android:translationX="100dp"
+        android:translationY="580dp"
+        app:backgroundTint="@color/black" />
+
+</RelativeLayout>
