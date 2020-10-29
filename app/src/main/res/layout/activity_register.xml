@@ -4,92 +4,127 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/register_background">
+    android:background="@color/light_grey">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/toolbar_gradient">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/circle"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:alpha="0.95"
+                android:translationX="160dp"
+                app:srcCompat="@drawable/logo_white" />
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/title1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create a New Account"
+        android:textColor="@color/darker_grey_80"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:translationX="55dp"
-        android:translationY="40dp" />
+        android:translationX="56dp"
+        android:translationY="110dp" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register for a new account to get started"
+        android:text="Register to get started"
+        android:textColor="@color/darker_grey_80"
         android:textSize="20sp"
-        android:translationX="30dp"
-        android:translationY="75dp" />
+        android:translationX="105dp"
+        android:translationY="150dp" />
 
     <EditText
-        android:id="@+id/first_name"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/name"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
         android:ems="10"
-        android:hint="First Name:"
+        android:hint="  Name:"
         android:textColorHint="@color/black_60"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="@color/white_80"
         android:inputType="textPersonName"
-        android:translationX="30dp"
-        android:translationY="265dp" />
-
-    <EditText
-        android:id="@+id/last_name"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Last Name:"
-        android:textColorHint="@color/black_60"
-        android:inputType="textPersonName"
-        android:translationX="30dp"
-        android:translationY="325dp" />
+        android:translationX="50dp"
+        android:translationY="243dp" />
 
     <EditText
         android:id="@+id/address"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
         android:ems="10"
-        android:hint="Full Address: "
+        android:hint="  Address:"
         android:textColorHint="@color/black_60"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="@color/white_80"
         android:inputType="textPersonName"
-        android:translationX="30dp"
-        android:translationY="382dp" />
+        android:translationX="50dp"
+        android:translationY="303dp" />
 
     <EditText
         android:id="@+id/email_address"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
         android:ems="10"
-        android:hint="Email Address:"
+        android:hint="  Email Address: "
         android:textColorHint="@color/black_60"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="@color/white_80"
         android:inputType="textPersonName"
-        android:translationX="30dp"
-        android:translationY="440dp" />
+        android:translationX="50dp"
+        android:translationY="363dp" />
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
         android:ems="10"
-        android:hint="Password:"
+        android:hint="  Password:"
         android:textColorHint="@color/black_60"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="@color/white_80"
         android:inputType="textPersonName"
-        android:translationX="30dp"
-        android:translationY="495dp" />
+        android:translationX="50dp"
+        android:translationY="423dp" />
 
     <Button
         android:id="@+id/register_button"
-        android:layout_width="220dp"
+        android:layout_width="200dp"
         android:layout_height="50dp"
-        android:background="@drawable/rounded_corners"
-        android:fontFamily="sans-serif-medium"
+        android:background="@drawable/gradient"
         android:text="REGISTER"
+        android:textColor="@color/white_80"
         android:textSize="15sp"
-        android:translationX="100dp"
-        android:translationY="580dp"
-        app:backgroundTint="@color/black" />
+        android:textStyle="bold"
+        android:translationX="110dp"
+        android:translationY="500dp"
+        app:backgroundTint="@color/colorTranslucent" />
+
+    <TextView
+        android:id="@+id/already_user"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:ems="10"
+        android:fontFamily="sans-serif"
+        android:text="Already have an account? Log In"
+        android:textColor="@color/darker_grey_80"
+        android:textSize="15sp"
+        android:translationX="95dp"
+        android:translationY="565dp" />
 
 </RelativeLayout>

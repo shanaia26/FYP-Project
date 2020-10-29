@@ -1,18 +1,18 @@
 package com.example.fyp_project;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-    EditText email;
-    EditText password;
-    EditText failedLogin;
-    EditText register;
-    Button loginButton;
+    Button logoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +21,16 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide(); // hide the title bar
         setContentView(R.layout.activity_main);
 
-        email = (EditText) findViewById(R.id.email);
-        password = (EditText) findViewById(R.id.password);
-        failedLogin = (EditText) findViewById(R.id.error_text);
-        register = (EditText) findViewById(R.id.register);
-        loginButton =  (Button) findViewById(R.id.login_button);
+        logoutButton = findViewById(R.id.logout_button);
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }
