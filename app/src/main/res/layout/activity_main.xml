@@ -1,43 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/custom_sticker"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="12dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_grey"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/main_toolbar"
+    <Button
+        android:id="@+id/logout_button"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/toolbar_gradient">
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:layout_marginTop="15sp"
+        android:text="Log Out"
+        android:textColor="#555555"
+        android:fontFamily="sans-serif-black"
+        android:padding="10dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/circle"
-            android:layout_width="50dp"
-            android:layout_height="60dp"
-            android:alpha="0.95"
-            android:translationX="170dp"
-            app:srcCompat="@drawable/logo_white" />
-
-        <Button
-            android:id="@+id/logout_button"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:background="@drawable/rounded_corner"
-            android:backgroundTint="@color/colorTranslucent"
-            android:drawableLeft="@drawable/logout_icon"
-            android:translationX="295dp"
-            android:translationY="15dp"
-            app:backgroundTint="#00FFFFFF" />
-    </LinearLayout>
-
-    </androidx.appcompat.widget.Toolbar>
-</RelativeLayout>
+</LinearLayout>

@@ -1,130 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="12dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_grey">
+    tools:context=".RegisterActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/main_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/toolbar_gradient">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/circle"
-                android:layout_width="50dp"
-                android:layout_height="60dp"
-                android:alpha="0.95"
-                android:translationX="160dp"
-                app:srcCompat="@drawable/logo_white" />
-        </LinearLayout>
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <TextView
-        android:id="@+id/title1"
+    <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create a New Account"
-        android:textColor="@color/darker_grey_80"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:translationX="56dp"
-        android:translationY="110dp" />
-
-    <TextView
-        android:id="@+id/title2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register to get started"
-        android:textColor="@color/darker_grey_80"
-        android:textSize="20sp"
-        android:translationX="105dp"
-        android:translationY="150dp" />
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/dc_grey" />
 
     <EditText
         android:id="@+id/name"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:hint="  Name:"
-        android:textColorHint="@color/black_60"
-        android:background="@drawable/rounded_corner"
-        android:backgroundTint="@color/white_80"
-        android:inputType="textPersonName"
-        android:translationX="50dp"
-        android:translationY="243dp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_background"
+        android:layout_marginTop="15dp"
+        android:hint="Name:"
+        android:padding="10dp"/>
 
     <EditText
-        android:id="@+id/address"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:hint="  Address:"
-        android:textColorHint="@color/black_60"
-        android:background="@drawable/rounded_corner"
-        android:backgroundTint="@color/white_80"
-        android:inputType="textPersonName"
-        android:translationX="50dp"
-        android:translationY="303dp" />
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_background"
+        android:layout_marginTop="15dp"
+        android:hint="Email:"
+        android:padding="10dp"/>
 
     <EditText
-        android:id="@+id/email_address"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:hint="  Email Address: "
-        android:textColorHint="@color/black_60"
-        android:background="@drawable/rounded_corner"
-        android:backgroundTint="@color/white_80"
-        android:inputType="textPersonName"
-        android:translationX="50dp"
-        android:translationY="363dp" />
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_background"
+        android:layout_marginTop="15dp"
+        android:hint="Username:"
+        android:padding="10dp"/>
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:hint="  Password:"
-        android:textColorHint="@color/black_60"
-        android:background="@drawable/rounded_corner"
-        android:backgroundTint="@color/white_80"
-        android:inputType="textPersonName"
-        android:translationX="50dp"
-        android:translationY="423dp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_background"
+        android:layout_marginTop="15dp"
+        android:hint="Password:"
+        android:padding="10dp"/>
 
     <Button
-        android:id="@+id/register_button"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:background="@drawable/gradient"
-        android:text="REGISTER"
-        android:textColor="@color/white_80"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:translationX="110dp"
-        android:translationY="500dp"
-        app:backgroundTint="@color/colorTranslucent" />
+        android:id="@+id/register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:layout_marginTop="15sp"
+        android:text="Register"
+        android:textColor="#555555"
+        android:fontFamily="sans-serif-black"
+        android:padding="10dp"/>
 
     <TextView
-        android:id="@+id/already_user"
-        android:layout_width="220dp"
+        android:id="@+id/login_user"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:ems="10"
-        android:fontFamily="sans-serif"
-        android:text="Already have an account? Log In"
-        android:textColor="@color/darker_grey_80"
-        android:textSize="15sp"
-        android:translationX="95dp"
-        android:translationY="565dp" />
+        android:text="Already a user? Log In"
+        android:layout_marginTop="15dp"/>
 
-</RelativeLayout>
+</LinearLayout>
