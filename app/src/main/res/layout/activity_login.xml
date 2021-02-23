@@ -10,46 +10,96 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        app:srcCompat="@drawable/dc_grey" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/dripping_marker"
+        android:text="delacruzcustoms"
+        android:textSize="55sp"
+        android:textColor="@color/colorPrimary"/>
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/text_background"
         android:layout_marginTop="15dp"
-        android:hint="Email:"
-        android:padding="10dp"/>
+        android:hint="Phone:"
+        android:inputType="number"
+        android:padding="10dp"
+        android:elevation="10dp"/>
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/text_background"
         android:layout_marginTop="15dp"
         android:hint="Password:"
-        android:padding="10dp"/>
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:elevation="10dp"/>
 
     <Button
-        android:id="@+id/login_user"
+        android:id="@+id/login_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:layout_marginTop="15sp"
         android:text="Log In"
-        android:textColor="#555555"
-        android:fontFamily="sans-serif-black"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
         android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/forgot_password_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="5dp"
+        android:text="Forgot Password?" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/remember_me_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:buttonTint="@color/colorPrimary"
+        android:text="Remember Me"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/register_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="New to DelaCruzCustoms? Register"/>
+        android:text="New to delacruzcustoms? Register"
+        android:textStyle="italic"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/admin_panel_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="ADMIN LOGIN"
+            android:textSize="10dp"/>
+
+        <TextView
+            android:id="@+id/not_admin_panel_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="NOT ADMIN"
+            android:textSize="10dp"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
 
 </LinearLayout>

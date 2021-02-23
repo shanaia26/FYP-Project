@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">DelaCruzCustoms</string>
+    <string name="app_name">DELACRUZCUSTOMS</string>
+    <string name="success_order">Thank You! Your order has been placed successfully. You will be notified once it has been shipped.</string>
+
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
 </resources>

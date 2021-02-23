@@ -1,72 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="12dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="12dp"
     tools:context=".RegisterActivity">
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        app:srcCompat="@drawable/dc_grey" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/dripping_marker"
+        android:text="delacruzcustoms"
+        android:textSize="55sp"
+        android:textColor="@color/colorPrimary"/>
 
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
         android:layout_marginTop="15dp"
+        android:background="@drawable/text_background"
         android:hint="Name:"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:elevation="10dp"/>
 
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
         android:layout_marginTop="15dp"
+        android:background="@drawable/text_background"
         android:hint="Email:"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:elevation="10dp"/>
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
         android:layout_marginTop="15dp"
-        android:hint="Username:"
-        android:padding="10dp"/>
+        android:background="@drawable/text_background"
+        android:hint="Phone:"
+        android:padding="10dp"
+        android:elevation="10dp"/>
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
         android:layout_marginTop="15dp"
+        android:background="@drawable/text_background"
         android:hint="Password:"
-        android:padding="10dp"/>
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:elevation="10dp"/>
 
     <Button
-        android:id="@+id/register"
+        android:id="@+id/register_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_background"
         android:layout_marginTop="15sp"
+        android:background="@drawable/button_background"
+        android:padding="10dp"
         android:text="Register"
-        android:textColor="#555555"
-        android:fontFamily="sans-serif-black"
-        android:padding="10dp"/>
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/login_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:text="Already a user? Log In"
-        android:layout_marginTop="15dp"/>
+        android:textStyle="italic"/>
 
 </LinearLayout>
