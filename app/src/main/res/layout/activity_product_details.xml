@@ -7,11 +7,24 @@
     android:layout_margin="10dp"
     tools:context=".ProductDetailsActivity">
 
+    <TextView
+        android:id="@+id/products_made_to_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:text="*ALL PRODUCTS ARE MADE TO ORDER*"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14dp"
+        android:textStyle="italic" />
+
     <ImageView
         android:id="@+id/details_image"
-        android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:layout_margin="10dp"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:layout_below="@id/products_made_to_order"
+        android:layout_centerHorizontal="true"
         android:elevation="50dp"
         android:scaleType="centerCrop" />
 
@@ -20,16 +33,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/details_image"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
-        android:elevation="25dp"
+        android:elevation="15dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/details_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="Product Name"
             android:textColor="@color/colorPrimary"
@@ -40,7 +53,7 @@
             android:id="@+id/details_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="Product Description"
             android:textColor="@color/colorPrimary"
@@ -51,13 +64,27 @@
             android:id="@+id/details_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:gravity="center"
             android:text="Product Price"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/details_size"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="95dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/text_background"
+            android:gravity="center"
+            android:hint="@string/shoe_size"
+            android:inputType="number"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16dp" />
 
     </LinearLayout>
 
@@ -67,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/details_layout1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         app:backGroundColor="@color/colorAccent"
         app:finalNumber="100"
         app:initialNumber="1"
@@ -83,8 +110,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/button_background"
         android:text="Add to Cart"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"/>
+        android:textColor="@color/colorPrimary" />
 
 </RelativeLayout>
 

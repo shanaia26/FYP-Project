@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerVertical="true"
     android:orientation="vertical"
+    android:padding="12dp"
     tools:context=".Admin.AdminCategoryActivity">
 
     <LinearLayout
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -21,33 +21,36 @@
             android:layout_gravity="center"
             android:layout_marginTop="2dp"
             android:layout_marginLeft="5dp"
-            android:fontFamily="@font/dripping_marker"
-            android:text="Choose a Category"
+            android:text=" Product Categories"
             android:textColor="@color/colorPrimary"
-            android:textSize="30dp" />
-
+            android:textSize="22dp"
+            android:textAllCaps="true"
+            android:drawableLeft="@drawable/category_icon"/>
 
         <Button
             android:id="@+id/exit_button"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginLeft="180dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="88dp"
             android:background="@drawable/button_background"
             android:drawableLeft="@drawable/exit_icon" />
 
     </LinearLayout>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_bar"
+        android:layout_marginTop="5dp">
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:orientation="horizontal"
-            android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +126,6 @@
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:orientation="horizontal"
-            android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -198,7 +200,6 @@
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:orientation="horizontal"
-            android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -274,9 +275,10 @@
         android:id="@+id/check_orders_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:layout_below="@+id/constraint_layout"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
         android:background="@drawable/button_background"
         android:text="Check New Orders"
         android:textColor="@color/colorPrimary"
@@ -288,9 +290,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/button_background"
         android:text="Maintain Products"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"/>
-</LinearLayout>
+
+</RelativeLayout>

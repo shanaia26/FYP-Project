@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.fyp_project.CartActivity;
+import com.example.fyp_project.MainActivity;
 import com.example.fyp_project.R;
 import com.example.fyp_project.StartActivity;
 import com.google.android.gms.tasks.Continuation;
@@ -58,7 +60,7 @@ public class AdminAddProductActivity extends AppCompatActivity {
     private StorageReference productImagesReference;
     private DatabaseReference productReference;
 
-    private Button exitButton;
+    //private Button exitButton;
     private ProgressDialog progressDialog;
 
 
@@ -73,7 +75,7 @@ public class AdminAddProductActivity extends AppCompatActivity {
         newProductImage = findViewById(R.id.new_product_image);
         addProductButton = findViewById(R.id.add_product_button);
 
-        exitButton = findViewById(R.id.exit_button);
+        //exitButton = findViewById(R.id.exit_button);
 
         progressDialog = new ProgressDialog(this);
 
@@ -81,18 +83,18 @@ public class AdminAddProductActivity extends AppCompatActivity {
         productImagesReference = FirebaseStorage.getInstance().getReference().child("Product Images");
         productReference = FirebaseDatabase.getInstance().getReference().child("Products");
 
-        exitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Removes all saved user information. User has to log in again
-                Paper.book().destroy();
-
-                Intent intent = new Intent(AdminAddProductActivity.this, StartActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        exitButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //Removes all saved user information. User has to log in again
+//                Paper.book().destroy();
+//
+//                Intent intent = new Intent(AdminAddProductActivity.this, StartActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
         newProductImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,5 +233,13 @@ public class AdminAddProductActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(AdminAddProductActivity.this, AdminCategoryActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -67,8 +67,7 @@
         android:background="@drawable/button_background"
         android:padding="10dp"
         android:text="Register"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"/>
+        android:textColor="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/login_user"

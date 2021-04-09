@@ -13,6 +13,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     public TextView textProductName;
     public TextView textProductPrice;
+    public TextView textProductSize;
     public TextView textProductQuantity;
 
     private ItemClickListener itemClickListener;
@@ -22,6 +23,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
         textProductName = itemView.findViewById(R.id.cart_product_name);
         textProductPrice = itemView.findViewById(R.id.cart_product_price);
+        textProductSize = itemView.findViewById(R.id.cart_product_size);
         textProductQuantity = itemView.findViewById(R.id.cart_product_quantity);
     }
 

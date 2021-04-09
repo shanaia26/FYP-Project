@@ -21,16 +21,11 @@ import com.example.fyp_project.Model.Cart;
 import com.example.fyp_project.ViewHolder.CartViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class CartActivity extends AppCompatActivity {
+    private static final int PAYPAL_REQUEST_CODE = 9999;
 
     private RecyclerView recyclerCart;
     private RecyclerView.LayoutManager layoutManager;
@@ -40,14 +35,15 @@ public class CartActivity extends AppCompatActivity {
 
     private int overallTotalPrice = 0;
 
-    private DatabaseReference orderReference;
-
-    //Cart aModel;
+    //Product & Order ID from Product Details Activity - after items are put in the cart
+    private String productID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+        productID = getIntent().getStringExtra("productID");
 
         recyclerCart = findViewById(R.id.recycler_cart);
         recyclerCart.setHasFixedSize(true);
@@ -58,15 +54,12 @@ public class CartActivity extends AppCompatActivity {
         totalPrice = findViewById(R.id.total_price);
         orderMessage = findViewById(R.id.order_message);
 
-        orderReference = FirebaseDatabase.getInstance().getReference()
-                .child("Orders")
-                .child(Common.currentUser.getPhone());
-
         nextProcessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CartActivity.this, ConfirmOrderActivity.class);
+                Intent intent = new Intent(CartActivity.this, ShipmentActivity.class);
                 intent.putExtra("Total Price", String.valueOf(overallTotalPrice));
+                intent.putExtra("productID", productID);
                 startActivity(intent);
                 finish();
             }
@@ -77,7 +70,7 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        CheckOrderState();
+        //CheckOrderState();
 
         final DatabaseReference cartListReference
                 = FirebaseDatabase.getInstance().getReference().child("Cart List");
@@ -95,7 +88,8 @@ public class CartActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull Cart model) {
                 holder.textProductQuantity.setText("Quantity: " + model.getQuantity());
                 holder.textProductPrice.setText("Price: €" + model.getPrice());
-                holder.textProductName.setText(model.getName());
+                holder.textProductName.setText(model.getProductName());
+                holder.textProductSize.setText("UK Size: " + model.getSize());
 
                 //Calculating the total price
                 int oneTypeProductPrice = ((Integer.parseInt(model.getPrice()))) * Integer.parseInt(model.getQuantity());
@@ -169,40 +163,40 @@ public class CartActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
-    private void CheckOrderState(){
-        orderReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    String shippingStatus = snapshot.child("status").getValue().toString();
-                    String userName = snapshot.child("name").getValue().toString();
-
-                    if(shippingStatus.equals("Shipped")){
-                        //Let user know their order has been shipped
-                        totalPrice.setText(userName + " Your order has been shipped.");
-                        recyclerCart.setVisibility(View.GONE);
-
-                        orderMessage.setVisibility(View.VISIBLE);
-                        orderMessage.setText("Your order has been shipped.");
-                        nextProcessButton.setVisibility(View.GONE);
-                        Toast.makeText(CartActivity.this, "You can purchase more products once you have received your order.", Toast.LENGTH_LONG).show();
-                    } else if (shippingStatus.equals("Order Not Shipped")){
-                        //Let user know their order has not been shipped
-                        totalPrice.setText("Shipping Status: Not Shipped");
-                        recyclerCart.setVisibility(View.GONE);
-
-                        orderMessage.setVisibility(View.VISIBLE);
-                        nextProcessButton.setVisibility(View.GONE);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
+//    private void CheckOrderState(){
+//        orderReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if(snapshot.exists()){
+//                    String shippingStatus = snapshot.child("shipmentStatus").getValue().toString();
+//                    String userName = snapshot.child("name").getValue().toString();
+//
+//                    if(shippingStatus.equals("Shipped")){
+//                        //Let user know their order has been shipped
+//                        totalPrice.setText(userName + " Your order has been shipped.");
+//                        recyclerCart.setVisibility(View.GONE);
+//
+//                        orderMessage.setVisibility(View.VISIBLE);
+//                        orderMessage.setText("Your order has been shipped.");
+//                        nextProcessButton.setVisibility(View.GONE);
+//                        Toast.makeText(CartActivity.this, "You can purchase more products once you have received your order.", Toast.LENGTH_LONG).show();
+//                    } else if (shippingStatus.equals("Order Not Shipped")){
+//                        //Let user know their order has not been shipped
+//                        totalPrice.setText("Shipping Status: Not Shipped");
+//                        recyclerCart.setVisibility(View.GONE);
+//
+//                        orderMessage.setVisibility(View.VISIBLE);
+//                        nextProcessButton.setVisibility(View.GONE);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
     @Override
     public void onBackPressed() {

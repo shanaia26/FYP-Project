@@ -45,12 +45,11 @@
         android:id="@+id/login_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_background"
         android:layout_marginTop="15sp"
+        android:background="@drawable/button_background"
+        android:padding="10dp"
         android:text="Log In"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold"
-        android:padding="10dp"/>
+        android:textColor="@color/colorPrimary"/>
 
     <TextView
         android:id="@+id/forgot_password_link"

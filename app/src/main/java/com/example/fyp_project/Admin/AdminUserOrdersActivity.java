@@ -12,17 +12,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.fyp_project.Model.AdminOrders;
 import com.example.fyp_project.R;
+import com.example.fyp_project.ViewHolder.AdminOrdersViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class AdminNewOrdersActivity extends AppCompatActivity {
+public class AdminUserOrdersActivity extends AppCompatActivity {
 
     private RecyclerView recyclerOrders;
 
@@ -55,15 +54,16 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
                 holder.userName.setText("Name: " + model.getName());
                 holder.userPhone.setText("Phone Number: " + model.getPhone());
                 holder.userOrderID.setText("Order ID: " + model.getOrderID());
+                holder.userStatus.setText("Shipment Status: " + model.getShipmentStatus());
                 holder.userTotalPrice.setText("Total Price: €" + model.getTotalAmount());
-                holder.userAddress.setText("Shipping Address: " + model.getAddress() + ", " + model.getCity());
+                holder.userAddress.setText("Shipping Address: " + model.getAddress());
 
                 holder.showProductsButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String userID = getRef(position).getKey();
 
-                        Intent intent = new Intent(AdminNewOrdersActivity.this, AdminUserProductsActivity.class);
+                        Intent intent = new Intent(AdminUserOrdersActivity.this, AdminUserProductsActivity.class);
                         intent.putExtra("userID", userID);
                         startActivity(intent);
                     }
@@ -77,7 +77,7 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
                                 "No"
                         };
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(AdminNewOrdersActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AdminUserOrdersActivity.this);
                         builder.setTitle("Has this order been shipped?");
 
                         builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -86,7 +86,8 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
                                 if(i == 0){
                                     String userID = getRef(position).getKey();
 
-                                    RemoveOrder(userID);
+                                    //ChangeOrderStatus(userID);
+
                                 } else{
                                     finish();
                                 }
@@ -100,7 +101,7 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
             @NonNull
             @Override
             public AdminOrdersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.orders_layout, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_orders_layout, parent, false);
                 return new AdminOrdersViewHolder(view);
             }
         };
@@ -109,28 +110,10 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
-    public static class AdminOrdersViewHolder extends RecyclerView.ViewHolder{
-        public TextView userName;
-        public TextView userPhone;
-        public TextView userTotalPrice;
-        public TextView userAddress;
-        public TextView userOrderID;
-        public Button showProductsButton;
-        public AdminOrdersViewHolder(View itemView){
-            super(itemView);
-
-            userName = itemView.findViewById(R.id.order_user_name);
-            userPhone = itemView.findViewById(R.id.order_phone_number);
-            userTotalPrice = itemView.findViewById(R.id.order_total_price);
-            userAddress = itemView.findViewById(R.id.order_address_city);
-            userOrderID = itemView.findViewById(R.id.order_order_id);
-            showProductsButton = itemView.findViewById(R.id.show_products_button);
-
-        }
-    }
-
     //Remove order when Admin ships order
-    private void RemoveOrder(String userID) {
-        ordersReference.child(userID).removeValue();
+    private void ChangeOrderStatus(final String status) {
+        //ordersReference.child(userID).removeValue();
+        ordersReference.child(status).setValue("Shipped");
+        //Let user know their order is Shipped
     }
 }

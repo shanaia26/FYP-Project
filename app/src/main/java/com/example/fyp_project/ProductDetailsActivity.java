@@ -34,15 +34,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private TextView nameDetails;
     private TextView descriptionDetails;
     private TextView priceDetails;
-
-    private String saveCurrentDate;
-    private String saveCurrentTime;
+    private TextView sizeDetails;
 
     private DatabaseReference orderReference;
 
     //Get productID of item user clicked
     private String productID = "";
-    private String status = "Normal";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +49,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         nameDetails = findViewById(R.id.details_name);
         descriptionDetails = findViewById(R.id.details_description);
         priceDetails = findViewById(R.id.details_price);
+        sizeDetails = findViewById(R.id.details_size);
         productImageDetails = findViewById(R.id.details_image);
 
         elegantNumberButton = findViewById(R.id.elegant_number_button);
@@ -59,20 +57,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         productID = getIntent().getStringExtra("productID");
 
-        orderReference = FirebaseDatabase.getInstance().getReference()
-                .child("Orders")
-                .child(Common.currentUser.getPhone());
-
         getProductDetails(productID);
 
         addProductCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(status.equals("Order Placed") || status.equals("Order Shipped")){
-                    Toast.makeText(ProductDetailsActivity.this, "You can place more orders once your order has been shipped or confirmed", Toast.LENGTH_LONG).show();
-                } else {
-                    AddToCartList();
-                }
+                AddToCartList();
             }
         });
     }
@@ -80,59 +70,70 @@ public class ProductDetailsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        CheckOrderState();
+
     }
 
     private void AddToCartList() {
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd MMM, yyyy");
-        saveCurrentDate = currentDate.format(calendar.getTime());
+        String shoeSize = sizeDetails.getText().toString().trim();
+        if (shoeSize.equals("")) {
+            Toast.makeText(ProductDetailsActivity.this, "Please enter your shoe size", Toast.LENGTH_LONG).show();
+        } else {
+            //Store in firebase
+            final DatabaseReference cartListReference =
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Cart List");
 
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
-        saveCurrentTime = currentTime.format(calendar.getTime());
+            final HashMap<String, Object> cartMap = new HashMap<>();
+            cartMap.put("orderID", "Not Available");
+            cartMap.put("productID", productID);
+            cartMap.put("productName", nameDetails.getText().toString());
+            cartMap.put("price", priceDetails.getText().toString());
+            cartMap.put("quantity", elegantNumberButton.getNumber());
+            cartMap.put("size", shoeSize);
+            cartMap.put("shipmentStatus", "Order Not Shipped");
 
-        //Store in firebase
-        DatabaseReference cartListReference = FirebaseDatabase.getInstance().getReference().child("Cart List");
+            cartListReference
+                    .child("User View")
+                    .child(Common.currentUser.getPhone())
+                    .child("Products")
+                    .child(productID)
+                    .updateChildren(cartMap)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
 
-        final HashMap<String, Object> cartMap = new HashMap<>();
-        cartMap.put("productID", productID);
-        cartMap.put("date", saveCurrentDate);
-        cartMap.put("time", saveCurrentTime);
-        cartMap.put("name", nameDetails.getText().toString());
-        cartMap.put("price", priceDetails.getText().toString());
-        cartMap.put("quantity", elegantNumberButton.getNumber());
-
-        cartListReference.child("User View").child(Common.currentUser.getPhone())
-                .child("Products").child(productID)
-                .updateChildren(cartMap)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            cartListReference.child("Admin View").child(Common.currentUser.getPhone())
-                                    .child("Products").child(productID)
-                                    .updateChildren(cartMap)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            Toast.makeText(ProductDetailsActivity.this, "Added to cart.", Toast.LENGTH_LONG).show();
-                                            Intent intent = new Intent(ProductDetailsActivity.this, MainActivity.class);
-                                            startActivity(intent);
-                                        }
-                                    });
+                                //Add to Admin View DB - for Admin to see
+                                cartListReference
+                                        .child("Admin View")
+                                        .child(Common.currentUser.getPhone())
+                                        .child("Products")
+                                        .child(productID)
+                                        .updateChildren(cartMap)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Toast.makeText(ProductDetailsActivity.this, "Added to cart.", Toast.LENGTH_LONG).show();
+                                                //Go to Cart
+                                                Intent intent = new Intent(ProductDetailsActivity.this, CartActivity.class);
+                                                intent.putExtra("productID", productID);
+                                                startActivity(intent);
+                                            }
+                                        });
+                            }
                         }
-                    }
-                });
+                    });
 
+        }
     }
 
 
-    private void getProductDetails(String productID){
+    private void getProductDetails(String productID) {
         DatabaseReference productReference = FirebaseDatabase.getInstance().getReference().child("Products");
         productReference.child(productID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     Products products = snapshot.getValue(Products.class);
 
                     nameDetails.setText(products.getName());
@@ -150,25 +151,4 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void CheckOrderState(){
-        orderReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    String shippingStatus = snapshot.child("status").getValue().toString();
-
-                    if(shippingStatus.equals("Shipped")){
-                        status = "Order Shipped";
-                    } else if (shippingStatus.equals("Order Not Shipped")){
-                        status = "Order Placed";
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 }

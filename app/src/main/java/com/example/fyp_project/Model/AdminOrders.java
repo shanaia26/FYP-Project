@@ -6,20 +6,22 @@ public class AdminOrders {
     private String city;
     private String name;
     private String phone;
-    private String status;
+    private String paymentStatus;
+    private String shipmentStatus;
     private String totalAmount;
 
     public AdminOrders(){
 
     }
 
-    public AdminOrders(String orderID, String address, String city, String name, String phone, String status, String totalAmount) {
+    public AdminOrders(String orderID, String address, String city, String name, String phone, String paymentStatus, String shipmentStatus, String totalAmount) {
         this.orderID = orderID;
         this.address = address;
         this.city = city;
         this.name = name;
         this.phone = phone;
-        this.status = status;
+        this.paymentStatus = paymentStatus;
+        this.shipmentStatus = shipmentStatus;
         this.totalAmount = totalAmount;
     }
 
@@ -63,12 +65,20 @@ public class AdminOrders {
         this.phone = phone;
     }
 
-    public String getStatus() {
-        return status;
+    public String getPaymentStatus() {
+        return paymentStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public String getShipmentStatus() {
+        return shipmentStatus;
+    }
+
+    public void setShipmentStatus(String shipmentStatus) {
+        this.shipmentStatus = shipmentStatus;
     }
 
     public String getTotalAmount() {
