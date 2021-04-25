@@ -18,8 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fyp_project.Admin.AdminMaintainProductsActivity;
 import com.example.fyp_project.Common.Common;
+import com.example.fyp_project.CustomerEnquiries.CustomerEnquiryHistoryActivity;
+import com.example.fyp_project.CustomerEnquiries.CustomerUploadEnquiryActivity;
 import com.example.fyp_project.Model.Products;
-import com.example.fyp_project.Model.UserOrders;
 import com.example.fyp_project.Paint.DesignActivity;
 import com.example.fyp_project.ViewHolder.ProductViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -29,9 +30,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import io.paperdb.Paper;
 
@@ -60,9 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Only if you're coming from Admin will this run
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        if(bundle != null){
-            type = getIntent().getExtras().get("Admin").toString();
-        }
+        if (bundle != null) type = getIntent().getExtras().get("Admin").toString();
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -99,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         floatingCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!type.equals("Admin")){
+                if (!type.equals("Admin")) {
                     Intent intent = new Intent(MainActivity.this, CartActivity.class);
                     startActivity(intent);
                 }
@@ -129,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if(type.equals("Admin")){
+                                if (type.equals("Admin")) {
                                     //If it's admin send to maintain products activity
                                     Intent intent = new Intent(MainActivity.this, AdminMaintainProductsActivity.class);
                                     intent.putExtra("productID", model.getProductID());
@@ -176,69 +172,127 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_home) {
-            Intent intent = new Intent(MainActivity.this, MainActivity.class);
-            startActivity(intent);
-
-        } else if (id == R.id.nav_profile) {
-            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-            intent.putExtra("name", Common.currentUser.getName());
-            intent.putExtra("email", Common.currentUser.getEmail());
-            intent.putExtra("phone", Common.currentUser.getPhone());
-            startActivity(intent);
-
-        } else if (id == R.id.nav_product) {
-            if(!type.equals("Admin")){
-                Intent intent = new Intent(MainActivity.this, ProductActivity.class);
+        switch (id) {
+            case R.id.nav_home:
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(intent);
-            }
-
-        } else if (id == R.id.nav_design) {
-            if(!type.equals("Admin")){
-                Intent intent = new Intent(MainActivity.this, DesignActivity.class);
-                startActivity(intent);
-            }
-
-        }
-        else if (id == R.id.nav_cart) {
-            if(!type.equals("Admin")){
-                Intent intent = new Intent(MainActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
-
-        } else if (id == R.id.nav_search) {
-            if (!type.equals("Admin")) {
-                Intent intent = new Intent(MainActivity.this, SearchProductsActivity.class);
-                startActivity(intent);
-            }
-
-        } else if (id == R.id.nav_history) {
-                if(!type.equals("Admin")){
-                    Intent intent = new Intent(MainActivity.this, OrderHistoryActivity.class);
-                    //intent.putExtra("orderID", orderID);
-                    startActivity(intent);
+                break;
+            case R.id.nav_search:
+                if (!type.equals("Admin")) {
+                    Intent searchIntent = new Intent(MainActivity.this, SearchProductsActivity.class);
+                    startActivity(searchIntent);
                 }
+                break;
+            case R.id.nav_enquiry:
+                if (!type.equals("Admin")) {
+                    Intent enquiryIntent = new Intent(MainActivity.this, CustomerUploadEnquiryActivity.class);
+                    startActivity(enquiryIntent);
+                }
+                break;
+            case R.id.nav_design:
+                if (!type.equals("Admin")) {
+                    Intent designIntent = new Intent(MainActivity.this, DesignActivity.class);
+                    startActivity(designIntent);
+                }
+                break;
+            case R.id.nav_profile:
+                Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                profileIntent.putExtra("name", Common.currentUser.getName());
+                profileIntent.putExtra("email", Common.currentUser.getEmail());
+                profileIntent.putExtra("phone", Common.currentUser.getPhone());
+                startActivity(profileIntent);
+                break;
+            case R.id.nav_enquiry_history:
+                if (!type.equals("Admin")) {
+                    Intent enquiryIntent = new Intent(MainActivity.this, CustomerEnquiryHistoryActivity.class);
+                    startActivity(enquiryIntent);
+                }
+                break;
+            case R.id.nav_order_history:
+                if (!type.equals("Admin")) {
+                    Intent orderHistoryIntent = new Intent(MainActivity.this, OrderHistoryActivity.class);
+                    startActivity(orderHistoryIntent);
+                }
+                break;
+            case R.id.nav_track_order:
+                if (!type.equals("Admin")) {
+                    Intent trackOrderIntent = new Intent(MainActivity.this, TrackOrderActivity.class);
+                    startActivity(trackOrderIntent);
+                }
+                break;
+            case R.id.nav_logout:
+                if (!type.equals("Admin")) {
+                    //Removes all saved user information. User has to log in again
+                    Paper.book().destroy();
 
-        } else if(id == R.id.nav_track_order){
-            if(!type.equals("Admin")){
-                Intent intent = new Intent(MainActivity.this, TrackOrderActivity.class);
-                startActivity(intent);
-            }
-
-        } else if (id == R.id.nav_logout) {
-            if(!type.equals("Admin")){
-                //Removes all saved user information. User has to log in again
-                Paper.book().destroy();
-
-                Intent intent = new Intent(MainActivity.this, StartActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
+                    Intent logoutIntent = new Intent(MainActivity.this, StartActivity.class);
+                    logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(logoutIntent);
+                }
+                break;
+            default:
         }
-
+//        if (id == R.id.nav_home) {
+//            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+//            startActivity(intent);
+//
+//        } else if (id == R.id.nav_search) {
+//            if (!type.equals("Admin")) {
+//                Intent intent = new Intent(MainActivity.this, SearchProductsActivity.class);
+//                startActivity(intent);
+//            }
+//
+//        } else if (id == R.id.nav_enquiry) {
+//            if (!type.equals("Admin")) {
+//                Intent intent = new Intent(MainActivity.this, CustomerUploadEnquiryActivity.class);
+//                startActivity(intent);
+//            }
+//
+//        } else if (id == R.id.nav_design) {
+//            if (!type.equals("Admin")) {
+//                Intent intent = new Intent(MainActivity.this, DesignActivity.class);
+//                startActivity(intent);
+//            }
+//
+//        } else if (id == R.id.nav_profile) {
+//            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+//            intent.putExtra("name", Common.currentUser.getName());
+//            intent.putExtra("email", Common.currentUser.getEmail());
+//            intent.putExtra("phone", Common.currentUser.getPhone());
+//            startActivity(intent);
+//
+//        } else if (id == R.id.nav_enquiry_history) {
+//            if (!type.equals("Admin")) {
+//                Intent intent = new Intent(MainActivity.this, CustomerEnquiryHistoryActivity.class);
+//                startActivity(intent);
+//            }
+//
+//        } else if (id == R.id.nav_order_history) {
+//            if (!type.equals("Admin")) {
+//                Intent intent = new Intent(MainActivity.this, OrderHistoryActivity.class);
+//                //intent.putExtra("orderID", orderID);
+//                startActivity(intent);
+//            }
+//
+//        } else if (id == R.id.nav_track_order) {
+//            if (!type.equals("Admin")) {
+//                Intent intent = new Intent(MainActivity.this, TrackOrderActivity.class);
+//                startActivity(intent);
+//            }
+//
+//        } else if (id == R.id.nav_logout) {
+//            if (!type.equals("Admin")) {
+//                //Removes all saved user information. User has to log in again
+//                Paper.book().destroy();
+//
+//                Intent intent = new Intent(MainActivity.this, StartActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent);
+//            }
+//        }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }
+

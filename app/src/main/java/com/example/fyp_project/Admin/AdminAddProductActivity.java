@@ -14,10 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.fyp_project.CartActivity;
-import com.example.fyp_project.MainActivity;
 import com.example.fyp_project.R;
-import com.example.fyp_project.StartActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,10 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
-import io.paperdb.Paper;
-
 public class AdminAddProductActivity extends AppCompatActivity {
-
     private String categoryName;
     private String productName;
     private String productDescription;
@@ -82,19 +76,6 @@ public class AdminAddProductActivity extends AppCompatActivity {
         categoryName = getIntent().getExtras().get("category").toString();
         productImagesReference = FirebaseStorage.getInstance().getReference().child("Product Images");
         productReference = FirebaseDatabase.getInstance().getReference().child("Products");
-
-//        exitButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //Removes all saved user information. User has to log in again
-//                Paper.book().destroy();
-//
-//                Intent intent = new Intent(AdminAddProductActivity.this, StartActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
 
         newProductImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,7 +202,7 @@ public class AdminAddProductActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    Intent intent = new Intent(AdminAddProductActivity.this, AdminCategoryActivity.class);
+                    Intent intent = new Intent(AdminAddProductActivity.this, AdminMainActivity.class);
                     startActivity(intent);
 
                     progressDialog.dismiss();
@@ -238,7 +219,7 @@ public class AdminAddProductActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(AdminAddProductActivity.this, AdminCategoryActivity.class);
+        Intent intent = new Intent(AdminAddProductActivity.this, AdminMainActivity.class);
         startActivity(intent);
         finish();
     }

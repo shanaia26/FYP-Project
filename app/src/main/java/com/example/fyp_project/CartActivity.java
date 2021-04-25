@@ -25,8 +25,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class CartActivity extends AppCompatActivity {
-    private static final int PAYPAL_REQUEST_CODE = 9999;
-
     private RecyclerView recyclerCart;
     private RecyclerView.LayoutManager layoutManager;
     private Button nextProcessButton;
@@ -52,7 +50,6 @@ public class CartActivity extends AppCompatActivity {
 
         nextProcessButton = findViewById(R.id.next_process_button);
         totalPrice = findViewById(R.id.total_price);
-        orderMessage = findViewById(R.id.order_message);
 
         nextProcessButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,8 +67,6 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //CheckOrderState();
-
         final DatabaseReference cartListReference
                 = FirebaseDatabase.getInstance().getReference().child("Cart List");
 
@@ -111,9 +106,15 @@ public class CartActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int i) {
                                 if (i == 0) {
-                                    Intent intent = new Intent(CartActivity.this, ProductDetailsActivity.class);
-                                    intent.putExtra("productID", model.getProductID());
-                                    startActivity(intent);
+//                                    if (!category.equals("Customer Enquiry")) {
+                                        Intent intent = new Intent(CartActivity.this, ProductDetailsActivity.class);
+                                        intent.putExtra("productID", model.getProductID());
+                                        startActivity(intent);
+//                                    } else {
+//                                        Toast.makeText(CartActivity.this, "Item cannot be edited.", Toast.LENGTH_LONG).show();
+//                                        Intent intent = new Intent(CartActivity.this, CartActivity.class);
+//                                        startActivity(intent);
+//                                    }
                                 }
                                 if (i == 1) {
                                     //Remove from User View

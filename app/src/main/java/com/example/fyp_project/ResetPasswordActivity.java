@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fyp_project.Common.Common;
-import com.example.fyp_project.Model.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -90,7 +89,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         String answer2 = question2.getText().toString().toLowerCase();
 
         if (question1.equals("") && question2.equals("")) {
-            Toast.makeText(ResetPasswordActivity.this, "Please answer both security questions", Toast.LENGTH_LONG).show();
+            Toast.makeText(ResetPasswordActivity.this, Common.EmptyCredentialsKey, Toast.LENGTH_LONG).show();
         } else {
             DatabaseReference questionsReference =
                     FirebaseDatabase.getInstance().getReference()
@@ -105,7 +104,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(ResetPasswordActivity.this, "Security questions answered successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ResetPasswordActivity.this, Common.SecurityQuestionsSuccessKey, Toast.LENGTH_LONG).show();
 
                         Intent intent = new Intent(ResetPasswordActivity.this, MainActivity.class);
                         startActivity(intent);
@@ -162,9 +161,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
                                 String ans2 = snapshot.child("Security Questions").child("answer2").getValue().toString();
 
                                 if (!ans1.equals(answer1)) {
-                                    Toast.makeText(ResetPasswordActivity.this, "Your first answer is incorrect.", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ResetPasswordActivity.this, Common.IncorrectAnswerKey, Toast.LENGTH_LONG).show();
                                 } else if (!ans2.equals(answer2)) {
-                                    Toast.makeText(ResetPasswordActivity.this, "Your second answer is incorrect.", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ResetPasswordActivity.this, Common.IncorrectAnswerKey, Toast.LENGTH_LONG).show();
                                 } else {
                                     //Allow user to change password
                                     AlertDialog.Builder builder = new AlertDialog.Builder(ResetPasswordActivity.this);
@@ -185,7 +184,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
                                                                 if (task.isSuccessful()) {
-                                                                    Toast.makeText(ResetPasswordActivity.this, "Password changed successfully.", Toast.LENGTH_LONG).show();
+                                                                    Toast.makeText(ResetPasswordActivity.this, Common.PasswordChangedSuccessKey, Toast.LENGTH_LONG).show();
 
                                                                     Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
                                                                     startActivity(intent);
@@ -207,7 +206,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                                 }
                             }
                         } else {
-                            Toast.makeText(ResetPasswordActivity.this, "Security questions have not been set.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ResetPasswordActivity.this, Common.SecurityQuestionsFailKey, Toast.LENGTH_LONG).show();
                         }
                     }
                 }
@@ -218,7 +217,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(this, "Please complete the form", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, Common.EmptyCredentialsKey, Toast.LENGTH_LONG).show();
         }
     }
 }

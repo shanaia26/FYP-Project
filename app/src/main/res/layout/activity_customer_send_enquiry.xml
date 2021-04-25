@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    tools:context=".CustomerEnquiries.CustomerSendEnquiryActivity">
+
+
+
+    <ImageView
+        android:id="@+id/customer_image"
+        android:layout_width="370dp"
+        android:layout_height="320dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:elevation="50dp"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:id="@+id/details_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/customer_image"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:elevation="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/customer_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="Product Description"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/customer_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="UK Size"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:id="@+id/customer_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:text="Comments"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16dp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/customer_cancel_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="20dp"
+            android:text="Cancel"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/button_background" />
+
+        <Button
+            android:id="@+id/customer_send_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:text="Send Design"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/button_background" />
+    </LinearLayout>
+
+</RelativeLayout>

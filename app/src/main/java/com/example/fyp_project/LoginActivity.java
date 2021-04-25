@@ -14,7 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.fyp_project.Admin.AdminCategoryActivity;
+import com.example.fyp_project.Admin.AdminMainActivity;
 import com.example.fyp_project.Common.Common;
 import com.example.fyp_project.Model.Users;
 import com.google.firebase.database.DataSnapshot;
@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                 loginButton.setText("Login Admin");
                 adminLink.setVisibility(View.INVISIBLE);
                 notAdminLink.setVisibility(View.VISIBLE);
-                parentDBName = "Admins";
+                parentDBName = "Admin";
             }
         });
 
@@ -113,9 +113,9 @@ public class LoginActivity extends AppCompatActivity {
         String uPassword = password.getText().toString().trim();
 
         if (TextUtils.isEmpty(uPhone) || TextUtils.isEmpty(uPassword)) {
-            Toast.makeText(LoginActivity.this, "Empty Credentials!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, Common.EmptyCredentialsKey, Toast.LENGTH_SHORT).show();
         } else if (password.length() < 6) {
-            Toast.makeText(LoginActivity.this, "Password too short!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, Common.PasswordFailKey, Toast.LENGTH_SHORT).show();
         } else {
             //Allow user to log in
             progressDialog.setTitle("Login Account");
@@ -145,16 +145,16 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (userData.getPhone().equals(phone)) {
                         if (userData.getPassword().equals(password)) {
-                            if(parentDBName.equals("Admins")){
-                                Toast.makeText(LoginActivity.this, "Admin logged in successfully.", Toast.LENGTH_SHORT).show();
+                            if(parentDBName.equals("Admin")){
+                                Toast.makeText(LoginActivity.this, Common.LoginSuccessKey, Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
 
-                                Intent intent = new Intent(LoginActivity.this, AdminCategoryActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 finish();
                             } else if(parentDBName.equals("Users")) {
-                                Toast.makeText(LoginActivity.this, "Logged in successfully.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, Common.LoginSuccessKey, Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -166,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 } else {
-                    Toast.makeText(LoginActivity.this, "Account with this " + phone + " does not exist", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, Common.LoginFailKey, Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                 }
             }

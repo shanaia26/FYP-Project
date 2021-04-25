@@ -25,10 +25,10 @@ public class CheckoutActivity extends AppCompatActivity {
     private TextView totalPrice;
     private Button stripeButton;
 
-    private String totalAmount ="";
-    private String deliveryOption ="";
-    private String orderID ="";
-    private String productID ="";
+    private String totalAmount = "";
+    private String deliveryOption = "";
+    private String orderID = "";
+    private String productID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,35 +58,51 @@ public class CheckoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Add complete total (product total + shipping) into firebase
-                final DatabaseReference ordersReference = FirebaseDatabase.getInstance().getReference()
-                        .child("Orders")
+                final DatabaseReference orderHistoryReference = FirebaseDatabase.getInstance().getReference()
+                        .child("Order History")
+                        .child(Common.currentUser.getPhone())
+                        .child(orderID);
+
+                final DatabaseReference adminOrderReference = FirebaseDatabase.getInstance().getReference()
+                        .child("Admin Orders")
                         .child(Common.currentUser.getPhone())
                         .child(orderID);
 
                 HashMap<String, Object> orderMap = new HashMap<>();
                 orderMap.put("overallTotal", String.valueOf(overallTotal));
 
-                ordersReference
+                orderHistoryReference
                         .updateChildren(orderMap)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    //Go to Stripe Payment
-                                    Intent intent = new Intent(CheckoutActivity.this, StripePaymentActivity.class);
-                                    intent.putExtra("overallTotal", String.valueOf(overallTotal));
-                                    intent.putExtra("orderID", orderID);
-                                    intent.putExtra("productID", productID);
-                                    startActivity(intent);
-                                }
+                                adminOrderReference
+                                        .updateChildren(orderMap)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    //Go to Stripe Payment
+                                                    Intent intent = new Intent(CheckoutActivity.this, StripePaymentActivity.class);
+                                                    intent.putExtra("overallTotal", String.valueOf(overallTotal));
+                                                    intent.putExtra("orderID", orderID);
+                                                    intent.putExtra("productID", productID);
+                                                    startActivity(intent);
+                                                }
+                                            }
+                                        });
                             }
                         });
             }
         });
     }
 
+    //Remove from DB if user does not finish the transaction
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(CheckoutActivity.this, ShipmentActivity.class);
+        startActivity(intent);
     }
+
 }

@@ -37,7 +37,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="70dp"
-        android:src="@drawable/face_icon" />
+        android:src="@drawable/person_icon" />
 
     <LinearLayout
         android:layout_width="wrap_content"

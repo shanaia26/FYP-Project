@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.fyp_project.Common.Common;
+import com.example.fyp_project.CustomerEnquiries.CustomerUploadEnquiryActivity;
 import com.example.fyp_project.Model.Cart;
 import com.example.fyp_project.ViewHolder.CartViewHolder;
 import com.example.fyp_project.ViewHolder.ProductHistoryViewHolder;
@@ -74,5 +76,13 @@ public class ProductOrderHistoryActivity extends AppCompatActivity {
                 };
         recyclerProductsHistory.setAdapter(adapter);
         adapter.startListening();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(ProductOrderHistoryActivity.this, OrderHistoryActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

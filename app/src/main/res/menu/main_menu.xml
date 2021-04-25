@@ -16,9 +16,9 @@
             android:title="Search" />
 
         <item
-            android:id="@+id/nav_product"
-            android:icon="@drawable/product_icon"
-            android:title="All Products" />
+            android:id="@+id/nav_enquiry"
+            android:icon="@drawable/file_icon"
+            android:title="Design Enquiry" />
 
         <item
             android:id="@+id/nav_design"
@@ -36,12 +36,12 @@
                     android:title="My Profile" />
 
                 <item
-                    android:id="@+id/nav_cart"
-                    android:icon="@drawable/cart_outline_icon"
-                    android:title="View Cart" />
+                    android:id="@+id/nav_enquiry_history"
+                    android:icon="@drawable/enquiry_icon"
+                    android:title="Enquiry History" />
 
                 <item
-                    android:id="@+id/nav_history"
+                    android:id="@+id/nav_order_history"
                     android:icon="@drawable/history_icon"
                     android:title="Order History" />
 

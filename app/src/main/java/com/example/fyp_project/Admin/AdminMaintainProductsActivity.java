@@ -77,7 +77,7 @@ public class AdminMaintainProductsActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    Intent intent = new Intent(AdminMaintainProductsActivity.this, AdminCategoryActivity.class);
+                    Intent intent = new Intent(AdminMaintainProductsActivity.this, AdminMainActivity.class);
                     startActivity(intent);
                     finish();
 
@@ -108,7 +108,7 @@ public class AdminMaintainProductsActivity extends AppCompatActivity {
                    if(task.isSuccessful()){
                        Toast.makeText(AdminMaintainProductsActivity.this, "Changes applied successfully.", Toast.LENGTH_LONG).show();
 
-                       Intent intent = new Intent(AdminMaintainProductsActivity.this, AdminCategoryActivity.class);
+                       Intent intent = new Intent(AdminMaintainProductsActivity.this, AdminMainActivity.class);
                        startActivity(intent);
                        finish();
                    }

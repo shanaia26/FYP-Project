@@ -35,7 +35,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
         historyProductsButton = findViewById(R.id.history_products_button);
 
         orderHistoryReference = FirebaseDatabase.getInstance().getReference()
-                .child("Orders")
+                .child("Order History")
                 .child(Common.currentUser.getPhone());
 
         recyclerOrderHistory = findViewById(R.id.recycler_order_history);

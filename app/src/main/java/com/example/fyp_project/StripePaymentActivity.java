@@ -99,7 +99,6 @@ public class StripePaymentActivity extends AppCompatActivity {
         payMap.put("items", itemList);
         String json = new Gson().toJson(payMap);
 
-
         RequestBody body = RequestBody.create(json, mediaType);
         Request request = new Request.Builder()
                 .url(BACKEND_URL + "create-payment-intent")
@@ -196,7 +195,7 @@ public class StripePaymentActivity extends AppCompatActivity {
             PaymentIntent paymentIntent = result.getIntent();
             PaymentIntent.Status status = paymentIntent.getStatus();
             if (status == PaymentIntent.Status.Succeeded) {
-                EmptyCart();
+                PaymentSuccess();
                 // Payment completed successfully
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 activity.displayAlert(
@@ -205,6 +204,7 @@ public class StripePaymentActivity extends AppCompatActivity {
                 );
 
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
+                PaymentFail();
                 // Payment failed – allow retrying using a different payment method
                 activity.displayAlert(
                         "Payment Failed",
@@ -223,10 +223,15 @@ public class StripePaymentActivity extends AppCompatActivity {
         }
     }
 
-    //Empties the cart when user has paid
-    private void EmptyCart() {
-        final DatabaseReference ordersReference = FirebaseDatabase.getInstance().getReference()
-                .child("Orders")
+    //Empties the cart when user has paid successfully
+    private void PaymentSuccess() {
+        final DatabaseReference orderHistoryReference = FirebaseDatabase.getInstance().getReference()
+                .child("Order History")
+                .child(Common.currentUser.getPhone())
+                .child(orderID);
+
+        final DatabaseReference adminOrderReference = FirebaseDatabase.getInstance().getReference()
+                .child("Admin Orders")
                 .child(Common.currentUser.getPhone())
                 .child(orderID);
 
@@ -243,17 +248,40 @@ public class StripePaymentActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             //Change Payment Status in DB
-                            ordersReference.child("paymentStatus").setValue("Payment Accepted");
-
-//                            cartReference
-//                                    .child("Admin View")
-//                                    .child(Common.currentUser.getPhone())
-//                                    .child("Products")
-//                                    .child(productID)
-//                                    .child("shipment").setValue("Payment Accepted");
+                            orderHistoryReference.child("paymentStatus").setValue("Payment Accepted");
+                            adminOrderReference.child("paymentStatus").setValue("Payment Accepted");
                         }
                     }
                 });
+    }
+
+    //Remove all details from DB
+    private void PaymentFail() {
+        final DatabaseReference orderHistoryReference = FirebaseDatabase.getInstance().getReference()
+                .child("Order History")
+                .child(Common.currentUser.getPhone())
+                .child(orderID);
+
+        final DatabaseReference adminOrderReference = FirebaseDatabase.getInstance().getReference()
+                .child("Admin Orders")
+                .child(Common.currentUser.getPhone())
+                .child(orderID);
+
+        final DatabaseReference cartReference = FirebaseDatabase.getInstance().getReference()
+                .child("Cart List");
+
+        orderHistoryReference.removeValue();
+        adminOrderReference.removeValue();
+
+        cartReference
+                .child("Admin View")
+                .child(Common.currentUser.getPhone())
+                .removeValue();
+
+        cartReference
+                .child("User View")
+                .child(Common.currentUser.getPhone())
+                .removeValue();
     }
 
     private void displayAlert(@NonNull String title,

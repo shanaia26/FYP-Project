@@ -44,6 +44,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:text="Show Products Ordered"
+        android:textColor="@color/colorPrimary"
         android:background="@drawable/button_background"
         android:elevation="20dp"/>
 

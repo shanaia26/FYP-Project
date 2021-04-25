@@ -7,16 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#FFC60505</color>
 
     <color name="colorPrimary">#555555</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#D5D5D5</color>
 
-    <color name="colorPrimary75">#BF474747</color>
-    <color name="colorPrimary40">#66474747</color>
-    <color name="colorAccent75">#BFD5D5D5</color>
-    <color name="colorAccent40">#66D5D5D5</color>
-
-    <color name="overlay_color">#55333639</color>
     <color name="colorTranslucent"></color>
 </resources>

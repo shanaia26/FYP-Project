@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.fyp_project.Common.Common;
@@ -34,12 +37,14 @@ public class ShipmentActivity extends AppCompatActivity {
     private EditText shipmentName;
     private EditText shipmentPhone;
     private EditText shipmentAddress;
-
+    private Button confirmOrderButton;
     private CheckBox standardCheckbox;
     private CheckBox expressCheckbox;
     private CheckBox internationalCheckbox;
 
-    private Button confirmOrderButton;
+   private String aShipmentName;
+    private String aShipmentPhone;
+   private String aShipmentAddress;
 
     private String saveCurrentDate;
     private String saveCurrentTime;
@@ -64,10 +69,9 @@ public class ShipmentActivity extends AppCompatActivity {
         internationalCheckbox = findViewById(R.id.international_checkBox);
         confirmOrderButton = findViewById(R.id.confirm_button);
 
-//        orderHistoryReference = FirebaseDatabase.getInstance().getReference()
-//                .child("Orders")
-//                .child(Common.currentUser.getPhone())
-//                .child("Products");
+        //Set Phone as user's phone number
+        shipmentPhone.setText(Common.currentUser.getPhone());
+        shipmentPhone.setEnabled(false);
 
         productID = getIntent().getStringExtra("productID");
 
@@ -83,15 +87,38 @@ public class ShipmentActivity extends AppCompatActivity {
     }
 
     private void Check() {
-        if (TextUtils.isEmpty(shipmentName.getText().toString()) || TextUtils.isEmpty(shipmentPhone.getText().toString()) ||
-                TextUtils.isEmpty(shipmentAddress.getText().toString())) {
+        aShipmentName = shipmentName.getText().toString().trim();
+        aShipmentPhone = shipmentPhone.getText().toString().trim();
+        aShipmentAddress = shipmentAddress.getText().toString().trim();
+
+        if (TextUtils.isEmpty(aShipmentName) || TextUtils.isEmpty(aShipmentAddress)) {
             Toast.makeText(ShipmentActivity.this, "Please provide full details.", Toast.LENGTH_LONG).show();
+        } else if (standardCheckbox.isChecked() == false && expressCheckbox.isChecked() == false && internationalCheckbox.isChecked() == false) {
+            Toast.makeText(ShipmentActivity.this, "Please pick a delivery option.", Toast.LENGTH_LONG).show();
+            //CheckBoxValidation();
         } else {
-            ConfirmOrder();
+            ConfirmOrder(aShipmentName, aShipmentPhone, aShipmentAddress);
         }
     }
 
-    private void ConfirmOrder() {
+//    private void CheckBoxValidation() {
+//        //Disable checkbox once user picked one option
+//        if (standardCheckbox.isChecked() == true) {
+//            //Disable other checkboxes
+//            expressCheckbox.setClickable(false);
+//            internationalCheckbox.setClickable(false);
+//        } else if (expressCheckbox.isChecked() == true) {
+//            //Disable other checkboxes
+//            standardCheckbox.setClickable(false);
+//            internationalCheckbox.setClickable(false);
+//        } else if (internationalCheckbox.isChecked() == true) {
+//            //Disable other checkboxes
+//            standardCheckbox.setClickable(false);
+//            expressCheckbox.setClickable(false);
+//        }
+//    }
+
+    private void ConfirmOrder(String aShipmentName, String aShipmentPhone, String aShipmentAddress) {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat currentDate = new SimpleDateFormat("dd MMM, yyyy");
         saveCurrentDate = currentDate.format(calendar.getTime());
@@ -103,7 +130,12 @@ public class ShipmentActivity extends AppCompatActivity {
         orderID = saveCurrentDate + saveCurrentTime;
 
         final DatabaseReference orderHistoryReference = FirebaseDatabase.getInstance().getReference()
-                .child("Orders")
+                .child("Order History")
+                .child(Common.currentUser.getPhone())
+                .child(orderID);
+
+        final DatabaseReference adminOrderReference = FirebaseDatabase.getInstance().getReference()
+                .child("Admin Orders")
                 .child(Common.currentUser.getPhone());
 
         final DatabaseReference adminReference = FirebaseDatabase.getInstance().getReference()
@@ -115,15 +147,15 @@ public class ShipmentActivity extends AppCompatActivity {
         //Add Delivery Option to firebase
         if (standardCheckbox.isChecked()) {
             String standardDelivery = "10";
-            orderHistoryReference.child(orderID).child("deliveryOption").setValue(standardDelivery);
+            orderHistoryReference.child("deliveryOption").setValue(standardDelivery);
             deliveryOption = standardDelivery;
         } else if (expressCheckbox.isChecked()) {
             String expressDelivery = "15";
-            orderHistoryReference.child(orderID).child("deliveryOption").setValue(expressDelivery);
+            orderHistoryReference.child("deliveryOption").setValue(expressDelivery);
             deliveryOption = expressDelivery;
         } else if (internationalCheckbox.isChecked()) {
             String internationalDelivery = "20";
-            orderHistoryReference.child(orderID).child("deliveryOption").setValue(internationalDelivery);
+            orderHistoryReference.child("deliveryOption").setValue(internationalDelivery);
             deliveryOption = internationalDelivery;
         }
 
@@ -132,55 +164,63 @@ public class ShipmentActivity extends AppCompatActivity {
 
         HashMap<String, Object> orderMap = new HashMap<>();
         orderMap.put("orderID", orderID);
-        orderMap.put("shipmentName", shipmentName.getText().toString());
-        orderMap.put("phone", shipmentPhone.getText().toString());
-        orderMap.put("address", shipmentAddress.getText().toString());
+        orderMap.put("shipmentName", aShipmentName);
+        orderMap.put("phone", aShipmentPhone);
+        orderMap.put("address", aShipmentAddress);
         orderMap.put("date", saveCurrentDate);
         orderMap.put("totalAmount", totalAmount);
         orderMap.put("shipmentStatus", shipmentStatus);
         orderMap.put("paymentStatus", paymentStatus);
 
         orderHistoryReference
-                .child(orderID)
                 .updateChildren(orderMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            HashMap<String, Object> updateOrderID = new HashMap<String, Object>();
-                            String newOrderID = orderID;
-                            String oldOrderID = "Not Available";
+                        adminOrderReference
+                                .child(orderID)
+                                .updateChildren(orderMap)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            //Add details for Admin DB
+                                            HashMap<String, Object> updateOrderID = new HashMap<String, Object>();
+                                            String newOrderID = orderID;
+                                            String oldOrderID = "Not Available";
 
-                            //Update Admin View Map too - Add Order ID to products ordered
-                            adminReference
-                                    .orderByChild("orderID")
-                                    .equalTo(oldOrderID)
-                                    .addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if (snapshot.exists()) {
-                                                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-                                                    updateOrderID.put(childSnapshot.getKey() + "/orderID", newOrderID);
-                                                }
+                                            //Update Admin View Map too - Add Order ID to products ordered
+                                            adminReference
+                                                    .orderByChild("orderID")
+                                                    .equalTo(oldOrderID)
+                                                    .addValueEventListener(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            if (snapshot.exists()) {
+                                                                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                                                                    updateOrderID.put(childSnapshot.getKey() + "/orderID", newOrderID);
+                                                                }
 
-                                                adminReference.updateChildren(updateOrderID);
-                                            }
+                                                                adminReference.updateChildren(updateOrderID);
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+
+                                            Intent intent = new Intent(ShipmentActivity.this, CheckoutActivity.class);
+                                            intent.putExtra("orderID", orderID);
+                                            intent.putExtra("productID", productID);
+                                            intent.putExtra("totalAmount", totalAmount);
+                                            intent.putExtra("deliveryOption", deliveryOption);
+
+                                            startActivity(intent);
                                         }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-
-                            Intent intent = new Intent(ShipmentActivity.this, CheckoutActivity.class);
-                            intent.putExtra("orderID", orderID);
-                            intent.putExtra("productID", productID);
-                            intent.putExtra("totalAmount", totalAmount);
-                            intent.putExtra("deliveryOption", deliveryOption);
-
-                            startActivity(intent);
-                        }
+                                    }
+                                });
                     }
                 });
     }
@@ -189,7 +229,7 @@ public class ShipmentActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(ShipmentActivity.this, MainActivity.class);
+        Intent intent = new Intent(ShipmentActivity.this, CartActivity.class);
         startActivity(intent);
         finish();
     }

@@ -1,21 +1,21 @@
 package com.example.fyp_project.Admin;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.fyp_project.Model.AdminOrders;
+import com.example.fyp_project.Model.UserOrders;
+import com.example.fyp_project.Model.Users;
 import com.example.fyp_project.R;
-import com.example.fyp_project.ViewHolder.AdminOrdersViewHolder;
+import com.example.fyp_project.ViewHolder.AdminOrderHistoryViewHolder;
+import com.example.fyp_project.ViewHolder.AdminUserOrdersViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -23,97 +23,77 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class AdminUserOrdersActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerOrders;
-
-    private DatabaseReference ordersReference;
+    private RecyclerView recyclerUsers;
+    private DatabaseReference usersReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_new_orders);
+        setContentView(R.layout.activity_admin_user_orders);
 
-        ordersReference = FirebaseDatabase.getInstance().getReference().child("Orders");
+        usersReference = FirebaseDatabase.getInstance().getReference()
+                .child("Users");
 
-        recyclerOrders = findViewById(R.id.recycler_orders);
-        recyclerOrders.setLayoutManager(new LinearLayoutManager(this));
+        recyclerUsers = findViewById(R.id.recycler_users);
+        recyclerUsers.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        FirebaseRecyclerOptions<AdminOrders> options =
-                new FirebaseRecyclerOptions.Builder<AdminOrders>()
-                .setQuery(ordersReference, AdminOrders.class)
+        FirebaseRecyclerOptions<Users> options =
+                new FirebaseRecyclerOptions.Builder<Users>()
+                .setQuery(usersReference, Users.class)
                 .build();
 
-        FirebaseRecyclerAdapter<AdminOrders, AdminOrdersViewHolder> adapter
-                = new FirebaseRecyclerAdapter<AdminOrders, AdminOrdersViewHolder>(options) {
+        FirebaseRecyclerAdapter<Users, AdminUserOrdersViewHolder> adapter
+                = new FirebaseRecyclerAdapter<Users, AdminUserOrdersViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull AdminOrdersViewHolder holder, int position, @NonNull AdminOrders model) {
-                holder.userName.setText("Name: " + model.getName());
-                holder.userPhone.setText("Phone Number: " + model.getPhone());
-                holder.userOrderID.setText("Order ID: " + model.getOrderID());
-                holder.userStatus.setText("Shipment Status: " + model.getShipmentStatus());
-                holder.userTotalPrice.setText("Total Price: €" + model.getTotalAmount());
-                holder.userAddress.setText("Shipping Address: " + model.getAddress());
+            protected void onBindViewHolder(@NonNull AdminUserOrdersViewHolder holder, int position, @NonNull Users model) {
+                holder.userOrderName.setText("Name: " + model.getName());
+                holder.userOrderPhone.setText("Phone Number: " + model.getPhone());
+                holder.userOrderEmail.setText("Email: " + model.getEmail());
 
-                holder.showProductsButton.setOnClickListener(new View.OnClickListener() {
+                holder.showAllOrdersButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String userID = getRef(position).getKey();
-
-                        Intent intent = new Intent(AdminUserOrdersActivity.this, AdminUserProductsActivity.class);
-                        intent.putExtra("userID", userID);
+                        String userID = model.getPhone();
+                        Intent intent = new Intent(AdminUserOrdersActivity.this, AdminOrderHistoryActivity.class);
+                        intent.putExtra("userID",userID);
                         startActivity(intent);
                     }
                 });
 
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                holder.showEnquiriesButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CharSequence options[] = new CharSequence[]{
-                                "Yes",
-                                "No"
-                        };
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(AdminUserOrdersActivity.this);
-                        builder.setTitle("Has this order been shipped?");
-
-                        builder.setItems(options, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int i) {
-                                if(i == 0){
-                                    String userID = getRef(position).getKey();
-
-                                    //ChangeOrderStatus(userID);
-
-                                } else{
-                                    finish();
-                                }
-                            }
-                        });
-                        builder.show();
+                        String userID = model.getPhone();
+                        Intent intent = new Intent(AdminUserOrdersActivity.this, AdminCustomerEnquiries.class);
+                        intent.putExtra("userID",userID);
+                        startActivity(intent);
                     }
                 });
             }
 
             @NonNull
             @Override
-            public AdminOrdersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_orders_layout, parent, false);
-                return new AdminOrdersViewHolder(view);
+            public AdminUserOrdersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_user_orders_layout, parent, false);
+                return new AdminUserOrdersViewHolder(view);
             }
         };
 
-        recyclerOrders.setAdapter(adapter);
+        recyclerUsers.setAdapter(adapter);
         adapter.startListening();
     }
 
-    //Remove order when Admin ships order
-    private void ChangeOrderStatus(final String status) {
-        //ordersReference.child(userID).removeValue();
-        ordersReference.child(status).setValue("Shipped");
-        //Let user know their order is Shipped
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(AdminUserOrdersActivity.this, AdminMainActivity.class);
+        startActivity(intent);
+        finish();
     }
+
 }

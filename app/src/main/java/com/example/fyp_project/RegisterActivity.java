@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.fyp_project.Common.Common;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -70,9 +71,9 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = regPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(password)) {
-                    Toast.makeText(RegisterActivity.this, "Empty Credentials!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, Common.EmptyCredentialsKey, Toast.LENGTH_SHORT).show();
                 } else if (password.length() < 6) {
-                    Toast.makeText(RegisterActivity.this, "Password too short!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, Common.PasswordFailKey, Toast.LENGTH_SHORT).show();
                 } else {
                     progressDialog.setTitle("Register Account");
                     progressDialog.setMessage("Please wait...");
@@ -101,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(RegisterActivity.this, "Congratulations! Your account has been made successfully.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegisterActivity.this, Common.RegisterSuccessKey, Toast.LENGTH_SHORT).show();
                                         progressDialog.dismiss();
 
                                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
@@ -110,14 +111,14 @@ public class RegisterActivity extends AppCompatActivity {
                                         finish();
                                     } else {
                                         progressDialog.dismiss();
-                                        Toast.makeText(RegisterActivity.this, "Something went wrong, Please try again.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegisterActivity.this, Common.RegisterFailKey, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                         } else {
-                            Toast.makeText(RegisterActivity.this, "This " + phone + " already exists", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, Common.PhoneExistsKey, Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
-                            Toast.makeText(RegisterActivity.this, "Please try again using another phone number", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, Common.TryAgainPhoneKey, Toast.LENGTH_SHORT).show();
 
                             Intent intent = new Intent(RegisterActivity.this, StartActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

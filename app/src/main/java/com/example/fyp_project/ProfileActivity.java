@@ -63,7 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(Common.currentUser.getPhone());
                 reference.removeValue();
-                Toast.makeText(ProfileActivity.this, "Account Deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, Common.AccountDeletedKey, Toast.LENGTH_SHORT).show();
 
                 startActivity(new Intent(ProfileActivity.this, StartActivity.class));
             }
@@ -103,7 +103,7 @@ public class ProfileActivity extends AppCompatActivity {
                 progressDialog.dismiss();
 
                 startActivity(new Intent(ProfileActivity.this, MainActivity.class));
-                Toast.makeText(ProfileActivity.this, "Profile info updated.", Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfileActivity.this, Common.AccountUpdatedKey, Toast.LENGTH_LONG).show();
                 finish();
             }
         });

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="12dp"
+    tools:context=".Admin.AdminOrderHistoryActivity">
+
+    <LinearLayout
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:drawableLeft="@drawable/information_icon"
+            android:text=" Customer Enquiries Details"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="22dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/enquiries_detail_image"
+        android:layout_width="370dp"
+        android:layout_height="320dp"
+        android:layout_below="@id/title_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:elevation="50dp"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:id="@+id/details_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/enquiries_detail_image"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:elevation="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/enquiries_detail_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Price for the customer: "
+            android:textColor="@color/colorPrimary"
+            android:textSize="18dp"
+            android:textAllCaps="true"/>
+
+        <EditText
+            android:id="@+id/enquiries_detail_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/text_background"
+            android:hint="Price:"
+            android:padding="10dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/enquiries_detail_send_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_background"
+        android:text="Send Price To User"
+        android:textColor="@color/colorPrimary" />
+
+</RelativeLayout>

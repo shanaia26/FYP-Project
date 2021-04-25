@@ -57,7 +57,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         productID = getIntent().getStringExtra("productID");
 
-        getProductDetails(productID);
+        GetProductDetails(productID);
 
         addProductCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,10 +67,27 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void GetProductDetails(String productID) {
+        DatabaseReference productReference = FirebaseDatabase.getInstance().getReference().child("Products");
+        productReference.child(productID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Products products = snapshot.getValue(Products.class);
 
+                    nameDetails.setText(products.getName());
+                    descriptionDetails.setText(products.getDescription());
+                    priceDetails.setText(products.getPrice());
+                    //Getting product image
+                    Picasso.get().load(products.getImage()).into(productImageDetails);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void AddToCartList() {
@@ -126,29 +143,4 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         }
     }
-
-
-    private void getProductDetails(String productID) {
-        DatabaseReference productReference = FirebaseDatabase.getInstance().getReference().child("Products");
-        productReference.child(productID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    Products products = snapshot.getValue(Products.class);
-
-                    nameDetails.setText(products.getName());
-                    descriptionDetails.setText(products.getDescription());
-                    priceDetails.setText(products.getPrice());
-                    //Getting product image
-                    Picasso.get().load(products.getImage()).into(productImageDetails);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
 }

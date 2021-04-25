@@ -6,7 +6,6 @@ public class Products {
     private String image;
     private String description;
     private String price;
-
     private String time;
     private String date;
     private String category;
