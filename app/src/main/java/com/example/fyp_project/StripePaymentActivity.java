@@ -230,10 +230,10 @@ public class StripePaymentActivity extends AppCompatActivity {
                 .child(Common.currentUser.getPhone())
                 .child(orderID);
 
-        final DatabaseReference adminOrderReference = FirebaseDatabase.getInstance().getReference()
-                .child("Admin Orders")
-                .child(Common.currentUser.getPhone())
-                .child(orderID);
+//        final DatabaseReference adminOrderReference = FirebaseDatabase.getInstance().getReference()
+//                .child("Admin Orders")
+//                .child(Common.currentUser.getPhone())
+//                .child(orderID);
 
         final DatabaseReference cartReference = FirebaseDatabase.getInstance().getReference()
                 .child("Cart List");
@@ -249,7 +249,7 @@ public class StripePaymentActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             //Change Payment Status in DB
                             orderHistoryReference.child("paymentStatus").setValue("Payment Accepted");
-                            adminOrderReference.child("paymentStatus").setValue("Payment Accepted");
+                            //adminOrderReference.child("paymentStatus").setValue("Payment Accepted");
                         }
                     }
                 });
@@ -262,16 +262,16 @@ public class StripePaymentActivity extends AppCompatActivity {
                 .child(Common.currentUser.getPhone())
                 .child(orderID);
 
-        final DatabaseReference adminOrderReference = FirebaseDatabase.getInstance().getReference()
-                .child("Admin Orders")
-                .child(Common.currentUser.getPhone())
-                .child(orderID);
+//        final DatabaseReference adminOrderReference = FirebaseDatabase.getInstance().getReference()
+//                .child("Admin Orders")
+//                .child(Common.currentUser.getPhone())
+//                .child(orderID);
 
         final DatabaseReference cartReference = FirebaseDatabase.getInstance().getReference()
                 .child("Cart List");
 
         orderHistoryReference.removeValue();
-        adminOrderReference.removeValue();
+//        adminOrderReference.removeValue();
 
         cartReference
                 .child("Admin View")

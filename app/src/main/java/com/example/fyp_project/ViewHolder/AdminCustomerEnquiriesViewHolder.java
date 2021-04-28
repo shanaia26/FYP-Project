@@ -18,7 +18,7 @@ public class AdminCustomerEnquiriesViewHolder extends RecyclerView.ViewHolder im
     public TextView enquiryDescription;
     public TextView enquirySize;
     public TextView enquiryComment;
-    public Button seeDetailsButton;
+    public Button seeEnquiryButton;
 
     private ItemClickListener itemClickListener;
 
@@ -30,7 +30,7 @@ public class AdminCustomerEnquiriesViewHolder extends RecyclerView.ViewHolder im
         enquiryDescription = itemView.findViewById(R.id.admin_enquiries_description);
         enquirySize = itemView.findViewById(R.id.admin_enquiries_size);
         enquiryComment = itemView.findViewById(R.id.admin_enquiries_comment);
-        seeDetailsButton = itemView.findViewById(R.id.admin_enquiries_see_details_button);
+        seeEnquiryButton = itemView.findViewById(R.id.admin_enquiries_see_enquiry_button);
 
     }
 

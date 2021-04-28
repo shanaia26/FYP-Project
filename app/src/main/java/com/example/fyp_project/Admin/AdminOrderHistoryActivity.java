@@ -2,6 +2,7 @@ package com.example.fyp_project.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.fyp_project.Common.Common;
 import com.example.fyp_project.Model.AdminOrderHistory;
@@ -20,8 +22,11 @@ import com.example.fyp_project.R;
 import com.example.fyp_project.ViewHolder.AdminOrderHistoryViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class AdminOrderHistoryActivity extends AppCompatActivity {
 
@@ -38,7 +43,7 @@ public class AdminOrderHistoryActivity extends AppCompatActivity {
         userID = getIntent().getStringExtra("userID");
 
         ordersReference = FirebaseDatabase.getInstance().getReference()
-                .child("Admin Orders")
+                .child("Order History")
                 .child(userID);
 
         recyclerOrders = findViewById(R.id.recycler_orders);
@@ -48,6 +53,7 @@ public class AdminOrderHistoryActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        //CheckUserOrders();
 
         FirebaseRecyclerOptions<AdminOrderHistory> options =
                 new FirebaseRecyclerOptions.Builder<AdminOrderHistory>()
@@ -90,12 +96,25 @@ public class AdminOrderHistoryActivity extends AppCompatActivity {
                         builder.setItems(options, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int i) {
-                                if(i == 0){
-                                    //String userID = getRef(position).getKey();
-                                    //Let user know their order is Shipped
-                                    ordersReference.child("shipmentStatus").setValue("Shipped");
+                                if (i == 0) {
+                                    String message = "Order Has Been Shipped.";
+                                    NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder
+                                            (AdminOrderHistoryActivity.this)
+                                            .setSmallIcon(R.drawable.notification_icon)
+                                            .setContentTitle("New Notification")
+                                            .setContentText(message)
+                                            .setAutoCancel(true);
 
-                                } else{
+                                    //Let user know their order is Shipped
+                                    ordersReference
+                                            .child(model.getOrderID())
+                                            .child("shipmentStatus").setValue("Shipped");
+
+                                    //Disable buttons once order has been shipped
+                                    holder.itemView.setEnabled(false);
+                                    Intent intent = new Intent(AdminOrderHistoryActivity.this, AdminOrderHistoryActivity.class);
+                                    startActivity(intent);
+                                } else {
                                     finish();
                                 }
                             }
@@ -115,5 +134,13 @@ public class AdminOrderHistoryActivity extends AppCompatActivity {
 
         recyclerOrders.setAdapter(adapter);
         adapter.startListening();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(AdminOrderHistoryActivity.this, AdminUserOrdersActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

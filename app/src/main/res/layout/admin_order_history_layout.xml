@@ -21,15 +21,41 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/admin_order_shipment_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="Shipment Status"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/admin_order_order_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Order ID"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16dp"
+                android:textStyle="bold"/>
+
+            <View
+                android:id="@+id/divider_line1"
+                style="@style/Divider"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
                 android:id="@+id/admin_order_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center_vertical|start"
                 android:text="User Name"
                 android:textColor="@color/colorPrimary"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:textSize="16dp"/>
 
             <TextView
                 android:id="@+id/admin_order_phone_number"
@@ -39,18 +65,22 @@
                 android:layout_alignParentRight="true"
                 android:text="Phone Number"
                 android:textColor="@color/colorPrimary"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:textSize="16dp"/>
 
             <TextView
-                android:id="@+id/admin_order_order_id"
+                android:id="@+id/admin_order_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:text="Order ID"
+                android:text="Address"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"/>
+
+            <View
+                android:id="@+id/divider_line2"
+                style="@style/Divider"
+                android:layout_marginTop="10dp"/>
 
             <TextView
                 android:id="@+id/admin_order_payment_status"
@@ -69,26 +99,6 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:text="Total Amount"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16dp"/>
-
-            <TextView
-                android:id="@+id/admin_order_shipment_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:text="Shipment Status"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16dp"/>
-
-            <TextView
-                android:id="@+id/admin_order_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:text="Address"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"/>
 

@@ -48,7 +48,8 @@
         android:layout_gravity="center"
         android:layout_below="@+id/slogan_text1"
         android:layout_marginTop="2dp"
-        android:text=" Send A Photo of Your Design and Get a Price Estimate"
+        android:layout_marginLeft="5dp"
+        android:text="Send A Photo of Your Design and Get a  Price Estimate"
         android:textColor="@color/colorPrimary"
         android:textSize="18dp"
         android:textAllCaps="true"/>

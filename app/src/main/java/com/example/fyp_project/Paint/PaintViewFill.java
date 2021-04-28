@@ -11,6 +11,7 @@ import android.graphics.EmbossMaskFilter;
 import android.graphics.MaskFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -20,9 +21,8 @@ import com.example.fyp_project.Common.Common;
 import com.example.fyp_project.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class PaintView extends View {
+public class PaintViewFill extends View {
 
     public static int BRUSH_SIZE = 10;
     private int strokeWidth;
@@ -34,15 +34,29 @@ public class PaintView extends View {
     private Paint bitmapPaint;
     private Paint paint;
 
-    private boolean emboss;
-    private boolean blur;
-    private MaskFilter mEmboss;
-    private MaskFilter mBlur;
-    private List<FingerPath> paths = new ArrayList<>();
+    private ArrayList<FingerPath> paths = new ArrayList<>();
 
-    public PaintView(Context context, AttributeSet attrs) {
+    private float positionX;
+    private float positionY;
+    private float refX;
+    private float refY;
+    private ScaleGestureDetector scaleDetector;
+    private float scaleFactor = 1.0f;
+    private final static float minZoon = 1.0f;
+    private final static float maxZoom = 5.0f;
+
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener{
+        public boolean onScale(ScaleGestureDetector detector) {
+            scaleFactor += detector.getScaleFactor();
+            scaleFactor = Math.max(scaleFactor, Math.min(scaleFactor, maxZoom));
+            invalidate();
+            return true;
+        }
+    }
+
+    public PaintViewFill(Context context, AttributeSet attrs) {
         super(context, attrs);
-
+        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
         path = new Path();
         bitmapPaint = new Paint(Paint.DITHER_FLAG);
 
@@ -53,31 +67,7 @@ public class PaintView extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setStrokeWidth(BRUSH_SIZE);
-        paint.setAlpha(0xff); // 0xff=255 in decimal
-
-        mEmboss = new EmbossMaskFilter(new float[]{1, 1, 1}, 0.4f, 6, 3.5f);
-        mBlur = new BlurMaskFilter(5, BlurMaskFilter.Blur.NORMAL);
-
-        strokeWidth = BRUSH_SIZE;
-
     }
-
-    //Sets the stroke width
-    public void setStrokeWidth(int width) {
-        strokeWidth = width;
-    }
-
-    //Sets the colour as the colour user chose
-    public void setPathColor(int colour) {
-        paint.setColor(colour);
-    }
-
-    // this methods returns the current bitmap
-    public Bitmap save() {
-        return bitmap;
-    }
-
 
     @Override
     protected void onSizeChanged(int w, int h, int oldW, int oldH) {
@@ -104,105 +94,53 @@ public class PaintView extends View {
 //        }
     }
 
+
+    private int brightness(int colour) {
+        return (colour >> 16) & 0xff;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.save();
-        for (FingerPath fp : paths) {
-            paint.setMaskFilter(null);
-            paint.setStrokeWidth(fp.strokeWidth);
-            if (fp.emboss) {
-                paint.setMaskFilter(mEmboss);
-                paint.setStrokeWidth(fp.strokeWidth);
-            } else if (fp.blur) {
-                paint.setMaskFilter(mBlur);
-                paint.setStrokeWidth(fp.strokeWidth);
-            }
-            canvas.drawPath(fp.path, paint);
-        }
 
+        canvas.translate(positionX, positionY);
+        canvas.scale(scaleFactor, scaleFactor);
         canvas.drawBitmap(bitmap, 0, 0, bitmapPaint);
         canvas.restore();
-
-    }
-
-    private float mX, mY;
-    private static final float TOUCH_TOLERANCE = 4;
-
-    private void touchStart(float x, float y) {
-        path = new Path();
-        FingerPath fp = new FingerPath(Common.COLOUR_SELECTED, emboss, blur, strokeWidth, path);
-        paths.add(fp);
-
-        path.reset();
-        path.moveTo(x, y);
-        mX = x;
-        mY = y;
-    }
-
-    private void touchMove(float x, float y) {
-        float dx = Math.abs(x - mX);
-        float dy = Math.abs(y - mY);
-        if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
-            path.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2);
-            mX = x;
-            mY = y;
-        }
-    }
-
-    private void touchUp() {
-        path.lineTo(mX, mY);
-        // commit the path to our offscreen
-        canvas.drawPath(path, paint);
-        // kill this so we don't double draw
-        path.reset();
     }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
-
+        scaleDetector.onTouchEvent(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                touchStart(x, y);
-                invalidate();
+                refX = event.getX();
+                refY = event.getY();
+                paint((int)((refX - positionX)/scaleFactor), (int)((refY - positionY)/scaleFactor));
+                //invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
-                touchMove(x, y);
-                invalidate();
-                break;
-            case MotionEvent.ACTION_UP:
-                touchUp();
+                float fX = event.getX();
+                float fY = event.getY();
+
+                positionX += fX - refX;
+                positionY += fY - refY;
+                refX = fX;
+                refY = fY;
                 invalidate();
                 break;
         }
         return true;
     }
-//
-//    public Bitmap getBitmap() {
-//        this.setDrawingCacheEnabled(true);
-//        this.buildDrawingCache();
-//        Bitmap bmp = Bitmap.createBitmap(this.getDrawingCache());
-//        this.setDrawingCacheEnabled(false);
-//
-//        return bmp;
-//    }
 
-    public void normal() {
-        emboss = false;
-        blur = false;
-    }
-
-    public void emboss() {
-        emboss = true;
-        blur = false;
-    }
-
-    public void blur() {
-        emboss = false;
-        blur = true;
+    private void paint(int x, int y) {
+        int targetColour = bitmap.getPixel(x, y);
+        if (targetColour != Color.BLACK) {
+            FloodFill.floodFill(bitmap, new Point(x, y), targetColour, Common.COLOUR_SELECTED);
+            invalidate();
+        }
     }
 
     public void clear() {
@@ -222,6 +160,20 @@ public class PaintView extends View {
             paths.remove(paths.size() - 1);
             invalidate();
         }
+    }
+//
+//    public Bitmap getBitmap() {
+//        this.setDrawingCacheEnabled(true);
+//        this.buildDrawingCache();
+//        Bitmap bmp = Bitmap.createBitmap(this.getDrawingCache());
+//        this.setDrawingCacheEnabled(false);
+//
+//        return bmp;
+//    }
+
+    //Sets the colour as the colour user chose
+    public void setPathColor(int colour) {
+        paint.setColor(colour);
     }
 
 }

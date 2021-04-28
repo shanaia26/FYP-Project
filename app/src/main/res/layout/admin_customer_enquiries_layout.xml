@@ -24,12 +24,12 @@
                 android:id="@+id/admin_enquiries_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="Enquiry Status"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18dp"
-                android:textStyle="bold" />
+                android:textStyle="italic" />
 
 
             <TextView
@@ -42,6 +42,11 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"
                 android:textStyle="bold" />
+
+            <View
+                android:id="@+id/divider_line"
+                style="@style/Divider"
+                android:layout_marginTop="10dp"/>
 
             <TextView
                 android:id="@+id/admin_enquiries_description"
@@ -76,11 +81,11 @@
                 android:textSize="16dp" />
 
             <Button
-                android:id="@+id/admin_enquiries_see_details_button"
+                android:id="@+id/admin_enquiries_see_enquiry_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_background"
-                android:text="See Details"
+                android:text="See Enquiry"
                 android:textColor="@color/colorPrimary" />
 
         </LinearLayout>

@@ -1,10 +1,15 @@
 package com.example.fyp_project.Common;
 
+import android.graphics.Color;
+import android.view.MotionEvent;
+
 import com.example.fyp_project.Model.AdminOrderHistory;
 import com.example.fyp_project.Model.Users;
 
 public class Common {
     public static Users currentUser;
+    public static int COLOUR_SELECTED = Color.RED;
+    public static MotionEvent EVENT_USED;
 
     public static final String UserPhoneKey = "UserPhone";
     public static final String UserPasswordKey = "UserPassword";

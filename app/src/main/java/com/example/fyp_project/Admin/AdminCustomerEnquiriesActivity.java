@@ -10,12 +10,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.fyp_project.Common.Common;
 import com.example.fyp_project.Model.CustomerEnquiries;
-import com.example.fyp_project.Model.Users;
-import com.example.fyp_project.ProductDetailsActivity;
 import com.example.fyp_project.R;
 import com.example.fyp_project.ViewHolder.AdminCustomerEnquiriesViewHolder;
 import com.example.fyp_project.ViewHolder.AdminUserOrdersViewHolder;
@@ -23,9 +19,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
-public class AdminCustomerEnquiries extends AppCompatActivity {
+public class AdminCustomerEnquiriesActivity extends AppCompatActivity {
     private RecyclerView recyclerEnquiries;
     private DatabaseReference enquiriesReference;
 
@@ -66,11 +61,11 @@ public class AdminCustomerEnquiries extends AppCompatActivity {
                 holder.enquirySize.setText("UK Size: " + model.getSize());
                 holder.enquiryComment.setText("Comment: " + model.getComment());
 
-                holder.seeDetailsButton.setOnClickListener(new View.OnClickListener() {
+                holder.seeEnquiryButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String productID = model.getProductID();
-                        Intent intent = new Intent(AdminCustomerEnquiries.this, AdminCustomerEnquiriesDetailsActivity.class);
+                        Intent intent = new Intent(AdminCustomerEnquiriesActivity.this, AdminCustomerEnquiriesDetailsActivity.class);
                         intent.putExtra("userID", userID);
                         intent.putExtra("productID", productID);
                         startActivity(intent);
@@ -93,7 +88,7 @@ public class AdminCustomerEnquiries extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(AdminCustomerEnquiries.this, AdminUserOrdersViewHolder.class);
+        Intent intent = new Intent(AdminCustomerEnquiriesActivity.this, AdminUserOrdersViewHolder.class);
         startActivity(intent);
         finish();
     }

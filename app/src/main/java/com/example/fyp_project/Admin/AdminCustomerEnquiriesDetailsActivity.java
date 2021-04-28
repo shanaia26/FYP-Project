@@ -2,8 +2,13 @@ package com.example.fyp_project.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,14 +16,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.fyp_project.CartActivity;
 import com.example.fyp_project.Common.Common;
-import com.example.fyp_project.MainActivity;
 import com.example.fyp_project.Model.CustomerEnquiries;
-import com.example.fyp_project.Model.Products;
-import com.example.fyp_project.ProductDetailsActivity;
 import com.example.fyp_project.R;
-import com.example.fyp_project.ShipmentActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,7 +62,30 @@ public class AdminCustomerEnquiriesDetailsActivity extends AppCompatActivity {
                 } else {
                     enquiriesReference.child("price").setValue(price);
                     enquiriesReference.child("enquiryStatus").setValue("Awaiting Response...");
-                    Toast.makeText(AdminCustomerEnquiriesDetailsActivity.this, "Price sent back to user.", Toast.LENGTH_LONG).show();
+
+                    //Notfication
+                    String message = "Price sent back to user.";
+
+                    //Allows Notification to run on any devices
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                        NotificationChannel notificationChannel = new NotificationChannel
+                                ("Price enquiry", "Price Enquiry", NotificationManager.IMPORTANCE_DEFAULT);
+                        NotificationManager manager = getSystemService(NotificationManager.class);
+                        manager.createNotificationChannel(notificationChannel);
+                    }
+
+                    NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder
+                            (AdminCustomerEnquiriesDetailsActivity.this,"Enquiry Notification");
+                    notificationBuilder.setContentTitle("Price Enquiry");
+                    notificationBuilder.setContentText(message);
+                    notificationBuilder.setSmallIcon(R.drawable.notification_icon);
+                    notificationBuilder.setAutoCancel(true);
+
+                    NotificationManagerCompat notificationManagerCompat =
+                            NotificationManagerCompat.from(AdminCustomerEnquiriesDetailsActivity.this);
+                    notificationManagerCompat.notify(1, notificationBuilder.build());
+
+                    //Toast.makeText(AdminCustomerEnquiriesDetailsActivity.this, message, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(AdminCustomerEnquiriesDetailsActivity.this, AdminMainActivity.class);
                     startActivity(intent);
                 }
@@ -95,7 +118,7 @@ public class AdminCustomerEnquiriesDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(AdminCustomerEnquiriesDetailsActivity.this, AdminCustomerEnquiries.class);
+        Intent intent = new Intent(AdminCustomerEnquiriesDetailsActivity.this, AdminCustomerEnquiriesActivity.class);
         startActivity(intent);
         finish();
     }

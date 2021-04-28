@@ -11,10 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.fyp_project.Model.UserOrders;
 import com.example.fyp_project.Model.Users;
 import com.example.fyp_project.R;
-import com.example.fyp_project.ViewHolder.AdminOrderHistoryViewHolder;
 import com.example.fyp_project.ViewHolder.AdminUserOrdersViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -69,7 +67,7 @@ public class AdminUserOrdersActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String userID = model.getPhone();
-                        Intent intent = new Intent(AdminUserOrdersActivity.this, AdminCustomerEnquiries.class);
+                        Intent intent = new Intent(AdminUserOrdersActivity.this, AdminCustomerEnquiriesActivity.class);
                         intent.putExtra("userID",userID);
                         startActivity(intent);
                     }

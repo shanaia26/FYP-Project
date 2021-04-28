@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.fyp_project.Admin.AdminOrderHistoryActivity;
+import com.example.fyp_project.Admin.AdminProductHistoryActivity;
 import com.example.fyp_project.Common.Common;
 import com.example.fyp_project.Model.UserOrders;
 import com.example.fyp_project.ViewHolder.OrderHistoryViewHolder;
@@ -25,14 +27,14 @@ public class OrderHistoryActivity extends AppCompatActivity {
     private RecyclerView recyclerOrderHistory;
     private DatabaseReference orderHistoryReference;
 
-    private Button historyProductsButton;
+    //private Button historyProductsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
 
-        historyProductsButton = findViewById(R.id.history_products_button);
+        //historyProductsButton = findViewById(R.id.history_products_button);
 
         orderHistoryReference = FirebaseDatabase.getInstance().getReference()
                 .child("Order History")
@@ -41,14 +43,14 @@ public class OrderHistoryActivity extends AppCompatActivity {
         recyclerOrderHistory = findViewById(R.id.recycler_order_history);
         recyclerOrderHistory.setLayoutManager(new LinearLayoutManager(this));
 
-        historyProductsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Show All Products User has ordered
-                Intent intent = new Intent(OrderHistoryActivity.this, ProductOrderHistoryActivity.class);
-                startActivity(intent);
-            }
-        });
+//        historyProductsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //Show All Products User has ordered
+//                Intent intent = new Intent(OrderHistoryActivity.this, ProductOrderHistoryActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     @Override
@@ -69,6 +71,13 @@ public class OrderHistoryActivity extends AppCompatActivity {
                 holder.historyOrderDate.setText("Date Ordered: " + model.getDate());
                 holder.historyShipmentStatus.setText("Shipment Status: " + model.getShipmentStatus());
 
+                holder.historyProductsButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(OrderHistoryActivity.this, ProductOrderHistoryActivity.class);
+                        startActivity(intent);
+                    }
+                });
             }
 
             @NonNull

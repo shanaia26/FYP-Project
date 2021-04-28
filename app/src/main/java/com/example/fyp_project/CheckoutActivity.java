@@ -63,10 +63,10 @@ public class CheckoutActivity extends AppCompatActivity {
                         .child(Common.currentUser.getPhone())
                         .child(orderID);
 
-                final DatabaseReference adminOrderReference = FirebaseDatabase.getInstance().getReference()
-                        .child("Admin Orders")
-                        .child(Common.currentUser.getPhone())
-                        .child(orderID);
+//                final DatabaseReference adminOrderReference = FirebaseDatabase.getInstance().getReference()
+//                        .child("Admin Orders")
+//                        .child(Common.currentUser.getPhone())
+//                        .child(orderID);
 
                 HashMap<String, Object> orderMap = new HashMap<>();
                 orderMap.put("overallTotal", String.valueOf(overallTotal));
@@ -76,11 +76,11 @@ public class CheckoutActivity extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                adminOrderReference
-                                        .updateChildren(orderMap)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
+//                                adminOrderReference
+//                                        .updateChildren(orderMap)
+//                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
                                                     //Go to Stripe Payment
                                                     Intent intent = new Intent(CheckoutActivity.this, StripePaymentActivity.class);
@@ -94,8 +94,8 @@ public class CheckoutActivity extends AppCompatActivity {
                             }
                         });
             }
-        });
-    }
+//        });
+//    }
 
     //Remove from DB if user does not finish the transaction
     @Override

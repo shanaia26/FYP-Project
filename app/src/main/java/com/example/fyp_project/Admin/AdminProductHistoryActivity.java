@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,5 +76,13 @@ public class AdminProductHistoryActivity extends AppCompatActivity {
                 };
         recyclerProducts.setAdapter(adapter);
         adapter.startListening();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(AdminProductHistoryActivity.this, AdminOrderHistoryActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

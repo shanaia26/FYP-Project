@@ -72,18 +72,36 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/details_size"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/text_background"
-            android:hint="@string/shoe_size"
-            android:inputType="number"
-            android:padding="10dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16dp" />
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/enquiries_detail_title"
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:layout_marginLeft="5dp"
+                android:padding="10dp"
+                android:text="Shoe Size: "
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/details_size"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/text_background"
+                android:hint="UK sizes please"
+                android:inputType="number"
+                android:padding="10dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16dp" />
+        </LinearLayout>
     </LinearLayout>
 
     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton

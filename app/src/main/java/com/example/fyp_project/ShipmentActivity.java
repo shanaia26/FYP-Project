@@ -42,9 +42,9 @@ public class ShipmentActivity extends AppCompatActivity {
     private CheckBox expressCheckbox;
     private CheckBox internationalCheckbox;
 
-   private String aShipmentName;
+    private String aShipmentName;
     private String aShipmentPhone;
-   private String aShipmentAddress;
+    private String aShipmentAddress;
 
     private String saveCurrentDate;
     private String saveCurrentTime;
@@ -134,9 +134,9 @@ public class ShipmentActivity extends AppCompatActivity {
                 .child(Common.currentUser.getPhone())
                 .child(orderID);
 
-        final DatabaseReference adminOrderReference = FirebaseDatabase.getInstance().getReference()
-                .child("Admin Orders")
-                .child(Common.currentUser.getPhone());
+//        final DatabaseReference adminOrderReference = FirebaseDatabase.getInstance().getReference()
+//                .child("Admin Orders")
+//                .child(Common.currentUser.getPhone());
 
         final DatabaseReference adminReference = FirebaseDatabase.getInstance().getReference()
                 .child("Cart List")
@@ -177,53 +177,53 @@ public class ShipmentActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        adminOrderReference
-                                .child(orderID)
-                                .updateChildren(orderMap)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            //Add details for Admin DB
-                                            HashMap<String, Object> updateOrderID = new HashMap<String, Object>();
-                                            String newOrderID = orderID;
-                                            String oldOrderID = "Not Available";
+//                        adminOrderReference
+//                                .child(orderID)
+//                                .updateChildren(orderMap)
+//                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            //Add details for Admin DB
+                            HashMap<String, Object> updateOrderID = new HashMap<String, Object>();
+                            String newOrderID = orderID;
+                            String oldOrderID = "Not Available";
 
-                                            //Update Admin View Map too - Add Order ID to products ordered
-                                            adminReference
-                                                    .orderByChild("orderID")
-                                                    .equalTo(oldOrderID)
-                                                    .addValueEventListener(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                            if (snapshot.exists()) {
-                                                                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-                                                                    updateOrderID.put(childSnapshot.getKey() + "/orderID", newOrderID);
-                                                                }
+                            //Update Admin View Map too - Add Order ID to products ordered
+                            adminReference
+                                    .orderByChild("orderID")
+                                    .equalTo(oldOrderID)
+                                    .addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                                                    updateOrderID.put(childSnapshot.getKey() + "/orderID", newOrderID);
+                                                }
 
-                                                                adminReference.updateChildren(updateOrderID);
-                                                            }
-                                                        }
-
-                                                        @Override
-                                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                                        }
-                                                    });
-
-                                            Intent intent = new Intent(ShipmentActivity.this, CheckoutActivity.class);
-                                            intent.putExtra("orderID", orderID);
-                                            intent.putExtra("productID", productID);
-                                            intent.putExtra("totalAmount", totalAmount);
-                                            intent.putExtra("deliveryOption", deliveryOption);
-
-                                            startActivity(intent);
+                                                adminReference.updateChildren(updateOrderID);
+                                            }
                                         }
-                                    }
-                                });
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+                            Intent intent = new Intent(ShipmentActivity.this, CheckoutActivity.class);
+                            intent.putExtra("orderID", orderID);
+                            intent.putExtra("productID", productID);
+                            intent.putExtra("totalAmount", totalAmount);
+                            intent.putExtra("deliveryOption", deliveryOption);
+
+                            startActivity(intent);
+                        }
                     }
                 });
     }
+//                });
+//    }
 
 
     @Override

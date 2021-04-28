@@ -21,7 +21,7 @@ import com.example.fyp_project.Common.Common;
 import com.example.fyp_project.CustomerEnquiries.CustomerEnquiryHistoryActivity;
 import com.example.fyp_project.CustomerEnquiries.CustomerUploadEnquiryActivity;
 import com.example.fyp_project.Model.Products;
-import com.example.fyp_project.Paint.DesignActivity;
+import com.example.fyp_project.Paint.StartDesignActivity;
 import com.example.fyp_project.ViewHolder.ProductViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_design:
                 if (!type.equals("Admin")) {
-                    Intent designIntent = new Intent(MainActivity.this, DesignActivity.class);
+                    Intent designIntent = new Intent(MainActivity.this, StartDesignActivity.class);
                     startActivity(designIntent);
                 }
                 break;

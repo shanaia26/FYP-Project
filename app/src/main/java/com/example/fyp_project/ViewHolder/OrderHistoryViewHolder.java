@@ -15,7 +15,7 @@ public class OrderHistoryViewHolder extends RecyclerView.ViewHolder implements V
     public TextView historyOrderDate;
     public TextView historyShipmentStatus;
     public TextView historyTotalPrice;
-//    public Button historyProductsButton;
+    public Button historyProductsButton;
 
     private ItemClickListener itemClickListener;
 
@@ -26,7 +26,7 @@ public class OrderHistoryViewHolder extends RecyclerView.ViewHolder implements V
         historyOrderDate = itemView.findViewById(R.id.history_order_date);
         historyShipmentStatus = itemView.findViewById(R.id.history_order_status);
         historyTotalPrice = itemView.findViewById(R.id.history_order_name);
-        //historyProductsButton = itemView.findViewById(R.id.history_products_button);
+        historyProductsButton = itemView.findViewById(R.id.history_products_button);
     }
 
     @Override
