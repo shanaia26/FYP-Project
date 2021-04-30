@@ -7,13 +7,32 @@
     android:layout_margin="10dp"
     tools:context=".CustomerEnquiries.CustomerSendEnquiryActivity">
 
+    <LinearLayout
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="5dp"
+            android:text=" ENQUIRY DETAILS"
+            android:textColor="@color/colorPrimary"
+            android:textSize="22dp"
+            android:textAllCaps="true"
+            android:drawableLeft="@drawable/details_icon"/>
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/customer_image"
         android:layout_width="370dp"
         android:layout_height="320dp"
         android:layout_marginTop="20dp"
+        android:layout_below="@id/title_bar"
         android:layout_centerHorizontal="true"
         android:elevation="50dp"
         android:scaleType="centerCrop" />
@@ -61,7 +80,6 @@
             android:text="Comments"
             android:textColor="@color/colorPrimary"
             android:textSize="16dp"/>
-
 
     </LinearLayout>
 

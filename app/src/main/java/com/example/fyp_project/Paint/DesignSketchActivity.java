@@ -4,13 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
@@ -18,12 +23,18 @@ import android.widget.Toast;
 
 import com.example.fyp_project.Common.Common;
 import com.example.fyp_project.CustomerEnquiries.CustomerUploadEnquiryActivity;
+import com.example.fyp_project.MainActivity;
 import com.example.fyp_project.R;
 import com.example.fyp_project.RegisterActivity;
 import com.example.fyp_project.StartActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.util.UUID;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -107,9 +118,7 @@ public class DesignSketchActivity extends AppCompatActivity {
                 // opening a OutputStream to write into the file
                 OutputStream imageOutStream = null;
                 ContentValues content = new ContentValues();
-                // name of the file
                 content.put(MediaStore.Images.Media.DISPLAY_NAME, "painting.png");
-                // type of the file
                 content.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
 
                 // location of the file to be saved
@@ -123,34 +132,17 @@ public class DesignSketchActivity extends AppCompatActivity {
                     bmp.compress(Bitmap.CompressFormat.PNG, 100, imageOutStream);
                     // close the output stream after use
                     imageOutStream.close();
+
                     //Let user know their painting is saved in their gallery
-                    Toast.makeText(DesignSketchActivity.this, "Painting saved in your gallery.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DesignSketchActivity.this, Common.SavedSuccessKey, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(DesignSketchActivity.this, CustomerUploadEnquiryActivity.class);
                     startActivity(intent);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-
-//        fabPen.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                paintView = new PaintView(DesignActivity.this, null);
-//                canvasLayout.addView(paintView, 0);
-//                paintView.requestFocus();
-//            }
-//        });
-//
-//        fabFill.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //paintView.setPaintStyle(Paint.Style.FILL_AND_STROKE);
-////                paintViewFill = new PaintViewFill(DesignActivity.this, null);
-////                canvasLayout.addView(paintViewFill, 0);
-////                paintViewFill.requestFocus();
-//            }
-//        });
     }
 
     private void ColorPickerDialog() {
@@ -198,4 +190,11 @@ public class DesignSketchActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(DesignSketchActivity.this, StartDesignActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

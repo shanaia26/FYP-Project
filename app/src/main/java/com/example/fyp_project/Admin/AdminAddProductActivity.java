@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.fyp_project.Common.Common;
 import com.example.fyp_project.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -54,7 +55,6 @@ public class AdminAddProductActivity extends AppCompatActivity {
     private StorageReference productImagesReference;
     private DatabaseReference productReference;
 
-    //private Button exitButton;
     private ProgressDialog progressDialog;
 
 
@@ -68,8 +68,6 @@ public class AdminAddProductActivity extends AppCompatActivity {
         newProductPrice = findViewById(R.id.new_product_price);
         newProductImage = findViewById(R.id.new_product_image);
         addProductButton = findViewById(R.id.add_product_button);
-
-        //exitButton = findViewById(R.id.exit_button);
 
         progressDialog = new ProgressDialog(this);
 
@@ -119,9 +117,9 @@ public class AdminAddProductActivity extends AppCompatActivity {
 
         //Check if user added an image
         if(imageURI == null){
-            Toast.makeText(this, "Product image required.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, Common.ImageRequiredKey, Toast.LENGTH_LONG).show();
         } else if (TextUtils.isEmpty(productName) || TextUtils.isEmpty(productDescription) || TextUtils.isEmpty(productPrice)){
-            Toast.makeText(this, "Empty Fields.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, Common.EmptyCredentialsKey, Toast.LENGTH_LONG).show();
         } else{
             StoreProductInformation();
         }
@@ -157,7 +155,7 @@ public class AdminAddProductActivity extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(AdminAddProductActivity.this, "Image uploaded successfully.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdminAddProductActivity.this, Common.ImageUploadedSuccessKey, Toast.LENGTH_SHORT).show();
 
                 Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
@@ -206,11 +204,10 @@ public class AdminAddProductActivity extends AppCompatActivity {
                     startActivity(intent);
 
                     progressDialog.dismiss();
-                    Toast.makeText(AdminAddProductActivity.this, "Product is added successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminAddProductActivity.this, Common.ProductAddedSuccessKey, Toast.LENGTH_SHORT).show();
                 } else {
                     progressDialog.dismiss();
-                    String message = task.getException().toString();
-                    Toast.makeText(AdminAddProductActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminAddProductActivity.this, Common.FailKey, Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -77,8 +77,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     //ColourPicker Library
     implementation 'com.github.yukuku:ambilwarna:2.0.1'
-//    //RangeSlider
-//    implementation 'com.github.channguyen:rsv:1.0.1'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-messaging:21.1.0'

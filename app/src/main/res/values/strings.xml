@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">DELACRUZCUSTOMS</string>
-    <string name="shoe_size">Shoe UK Size: </string>
 
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>

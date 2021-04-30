@@ -58,6 +58,7 @@ public class CustomerSendEnquiryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Remove enquiry from DB
+                customerEnquiryReference.removeValue();
             }
         });
 
@@ -93,56 +94,6 @@ public class CustomerSendEnquiryActivity extends AppCompatActivity {
                     }
                 });
     }
-
-//    private void SendEnquiry() {
-//        //Store in firebase
-//        final DatabaseReference cartListReference =
-//                FirebaseDatabase.getInstance().getReference()
-//                        .child("Cart List");
-//
-//        final HashMap<String, Object> cartMap = new HashMap<>();
-//        cartMap.put("orderID", "Not Available");
-//        cartMap.put("productID", customerProductID);
-//        cartMap.put("description", customerDescription.getText().toString());
-//        cartMap.put("size", customerSize.getText().toString());
-//        cartMap.put("comment", customerComment.getText().toString());
-//        cartMap.put("orderStatus", "Order Not Confirmed");
-//
-//        cartListReference
-//                .child("User View")
-//                .child("Pending Orders")
-//                .child(Common.currentUser.getPhone())
-//                .child("Products")
-//                .child(customerProductID)
-//                .updateChildren(cartMap)
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if (task.isSuccessful()) {
-//                            //Add to Admin View DB - for Admin to see
-//                            cartListReference
-//                                    .child("Admin View")
-//                                    .child("Pending Orders")
-//                                    .child(Common.currentUser.getPhone())
-//                                    .child("Products")
-//                                    .child(customerProductID)
-//                                    .updateChildren(cartMap)
-//                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                        @Override
-//                                        public void onComplete(@NonNull Task<Void> task) {
-//                                            //Go to Cart
-//                                            Intent intent = new Intent(CustomerEnquiryDetailsActivity.this, CustomerSendEnquiryActivity.class);
-//                                            intent.putExtra("customerProductID", customerProductID);
-//                                            intent.putExtra("CustomerUpload", "CustomerUpload");
-//                                            startActivity(intent);
-//                                        }
-//                                    });
-//                        }
-//                    }
-//                });
-//
-//    }
-//    }
 
     @Override
     public void onBackPressed() {

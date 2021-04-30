@@ -27,14 +27,10 @@ public class OrderHistoryActivity extends AppCompatActivity {
     private RecyclerView recyclerOrderHistory;
     private DatabaseReference orderHistoryReference;
 
-    //private Button historyProductsButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
-
-        //historyProductsButton = findViewById(R.id.history_products_button);
 
         orderHistoryReference = FirebaseDatabase.getInstance().getReference()
                 .child("Order History")
@@ -43,14 +39,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
         recyclerOrderHistory = findViewById(R.id.recycler_order_history);
         recyclerOrderHistory.setLayoutManager(new LinearLayoutManager(this));
 
-//        historyProductsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //Show All Products User has ordered
-//                Intent intent = new Intent(OrderHistoryActivity.this, ProductOrderHistoryActivity.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     @Override
@@ -67,8 +55,9 @@ public class OrderHistoryActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull OrderHistoryViewHolder holder, int position, @NonNull UserOrders model) {
                 holder.historyOrderID.setText("Order ID: " + model.getOrderID());
-                holder.historyTotalPrice.setText("Name: " + model.getShipmentName());
                 holder.historyOrderDate.setText("Date Ordered: " + model.getDate());
+                holder.historyOrderName.setText("Name: " + model.getShipmentName());
+                holder.historyOrderPhone.setText("Phone: " + model.getPhone());
                 holder.historyShipmentStatus.setText("Shipment Status: " + model.getShipmentStatus());
 
                 holder.historyProductsButton.setOnClickListener(new View.OnClickListener() {

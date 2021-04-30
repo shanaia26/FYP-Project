@@ -13,8 +13,9 @@ import com.example.fyp_project.R;
 public class OrderHistoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     public TextView historyOrderID;
     public TextView historyOrderDate;
+    public TextView historyOrderName;
+    public TextView historyOrderPhone;
     public TextView historyShipmentStatus;
-    public TextView historyTotalPrice;
     public Button historyProductsButton;
 
     private ItemClickListener itemClickListener;
@@ -24,8 +25,9 @@ public class OrderHistoryViewHolder extends RecyclerView.ViewHolder implements V
 
         historyOrderID = itemView.findViewById(R.id.history_order_id);
         historyOrderDate = itemView.findViewById(R.id.history_order_date);
+        historyOrderName = itemView.findViewById(R.id.history_order_name);
+        historyOrderPhone = itemView.findViewById(R.id.history_order_phone);
         historyShipmentStatus = itemView.findViewById(R.id.history_order_status);
-        historyTotalPrice = itemView.findViewById(R.id.history_order_name);
         historyProductsButton = itemView.findViewById(R.id.history_products_button);
     }
 

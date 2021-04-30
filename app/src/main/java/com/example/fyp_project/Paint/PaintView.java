@@ -82,26 +82,15 @@ public class PaintView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldW, int oldH) {
         super.onSizeChanged(w, h, oldW, oldH);
-//        if (bitmap == null) {
-        bitmapSrc = BitmapFactory.decodeResource(getResources(), R.drawable.design_background)
-                .copy(Bitmap.Config.ARGB_8888, true);
+        Bitmap bitmapSrc = null;
+        if (Common.IMAGE_FROM_GALLERY != null) {
+            bitmapSrc = Common.IMAGE_FROM_GALLERY;
+        } else {
+            bitmapSrc = BitmapFactory.decodeResource(getResources(), R.drawable.design_background)
+                    .copy(Bitmap.Config.ARGB_8888, true);
+        }
         bitmap = Bitmap.createScaledBitmap(bitmapSrc, w, h, false);
         canvas = new Canvas(bitmap);
-//            for (int i = 0; i < bitmap.getWidth(); i++) {
-//                for (int j = 0; j < bitmap.getHeight(); j++) {
-//                    int alpha = 255 - brightness(bitmap.getPixel(i, j));
-//                    if (alpha < 300) {
-//                        bitmap.setPixel(i, j, Color.WHITE);
-//                    } else {
-//                        bitmap.setPixel(i, j, Color.BLACK);
-//                    }
-//                }
-//            }
-//        }
-//            if (defaultBitmap == null) {
-//                defaultBitmap = Bitmap.createBitmap(bitmap);
-//            }
-//        }
     }
 
     @Override
@@ -180,15 +169,6 @@ public class PaintView extends View {
         }
         return true;
     }
-//
-//    public Bitmap getBitmap() {
-//        this.setDrawingCacheEnabled(true);
-//        this.buildDrawingCache();
-//        Bitmap bmp = Bitmap.createBitmap(this.getDrawingCache());
-//        this.setDrawingCacheEnabled(false);
-//
-//        return bmp;
-//    }
 
     public void normal() {
         emboss = false;

@@ -67,7 +67,7 @@ public class AdminOrderHistoryActivity extends AppCompatActivity {
                 holder.userName.setText("Name: " + model.getShipmentName());
                 holder.userPhone.setText("Phone Number: " + model.getPhone());
                 holder.userOrderID.setText("Order ID: " + model.getOrderID());
-                holder.userPaymentStatus.setText("Payment Status: " + model.getShipmentStatus());
+                holder.userPaymentStatus.setText("Payment Status: " + model.getPaymentStatus());
                 holder.userTotalPrice.setText("Total Amount: €" + model.getOverallTotal());
                 holder.userShipmentStatus.setText("Shipment Status: " + model.getShipmentStatus());
                 holder.userAddress.setText("Shipping Address: " + model.getAddress());

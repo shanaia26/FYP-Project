@@ -56,7 +56,6 @@ public class CustomerUploadEnquiryActivity extends AppCompatActivity {
     private StorageReference customerImagesReference;
     private DatabaseReference customerDesignReference;
 
-    //private Button exitButton;
     private ProgressDialog progressDialog;
 
 
@@ -224,11 +223,10 @@ public class CustomerUploadEnquiryActivity extends AppCompatActivity {
                     startActivity(intent);
 
                     progressDialog.dismiss();
-                    Toast.makeText(CustomerUploadEnquiryActivity.this, "Enquiry uploaded successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CustomerUploadEnquiryActivity.this, Common.EnquiryUploadedSuccessKey, Toast.LENGTH_SHORT).show();
                 } else {
                     progressDialog.dismiss();
-                    String message = task.getException().toString();
-                    Toast.makeText(CustomerUploadEnquiryActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CustomerUploadEnquiryActivity.this, Common.FailKey, Toast.LENGTH_SHORT).show();
                 }
             }
         });

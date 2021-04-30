@@ -93,7 +93,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private void AddToCartList() {
         String shoeSize = sizeDetails.getText().toString().trim();
         if (shoeSize.equals("")) {
-            Toast.makeText(ProductDetailsActivity.this, "Please enter your shoe size", Toast.LENGTH_LONG).show();
+            Toast.makeText(ProductDetailsActivity.this, Common.EmptyCredentialsKey, Toast.LENGTH_LONG).show();
         } else {
             //Store in firebase
             final DatabaseReference cartListReference =
@@ -130,7 +130,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                Toast.makeText(ProductDetailsActivity.this, "Added to cart.", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(ProductDetailsActivity.this, Common.AddedToCartKey, Toast.LENGTH_LONG).show();
                                                 //Go to Cart
                                                 Intent intent = new Intent(ProductDetailsActivity.this, CartActivity.class);
                                                 intent.putExtra("productID", productID);

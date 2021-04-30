@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,30 +7,29 @@
     android:layout_margin="12dp"
     tools:context=".Admin.AdminProductHistoryActivity">
 
-    <RelativeLayout
-        android:id="@+id/products_layout"
+    <LinearLayout
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentTop="true">
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/new_orders"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Products"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:drawableLeft="@drawable/list_icon"
+            android:text=" Products Ordered"
+            android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
-            android:textSize="20dp"
-            android:textAlignment="center"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="10dp"/>
-    </RelativeLayout>
+            android:textSize="22dp" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_products"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/products_layout"/>
-
-
-
+        android:layout_below="@id/title_bar" />
 </RelativeLayout>

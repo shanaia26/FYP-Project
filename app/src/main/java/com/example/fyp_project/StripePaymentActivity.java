@@ -296,7 +296,7 @@ public class StripePaymentActivity extends AppCompatActivity {
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(StripePaymentActivity.this,"Your order has been placed successfully.", Toast.LENGTH_LONG).show();
+                Toast.makeText(StripePaymentActivity.this,Common.OrderPlacedSuccessKey, Toast.LENGTH_LONG).show();
                 //Go back to main activity
                 Intent intent = new Intent(StripePaymentActivity.this, MainActivity.class);
                 //intent.putExtra("productID", productID);

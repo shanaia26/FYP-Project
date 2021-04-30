@@ -111,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         finish();
                                     } else {
                                         progressDialog.dismiss();
-                                        Toast.makeText(RegisterActivity.this, Common.RegisterFailKey, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegisterActivity.this, Common.FailKey, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });

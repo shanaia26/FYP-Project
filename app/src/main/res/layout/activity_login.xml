@@ -16,7 +16,7 @@
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/dripping_marker"
         android:text="delacruzcustoms"
-        android:textSize="55sp"
+        android:textSize="55dp"
         android:textColor="@color/colorPrimary"/>
 
     <EditText

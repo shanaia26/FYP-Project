@@ -31,7 +31,6 @@ public class AdminMainActivity extends AppCompatActivity implements NavigationVi
     private CardView characterButton;
     private CardView glitterButton;
     private CardView backpackButton;
-    //private DatabaseReference productReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,60 +152,31 @@ public class AdminMainActivity extends AppCompatActivity implements NavigationVi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-//        switch(id){
-//            case R.id.nav_home:
-//                Intent intent = new Intent(AdminMainActivity.this, AdminMainActivity.class);
-//                startActivity(intent);
-//                break;
-//            case R.id.nav_orders:
-//                Intent ordersIntent = new Intent(AdminMainActivity.this, AdminUserOrdersActivity.class);
-//                startActivity(ordersIntent);
-//                break;
-//            case R.id.nav_product:
-//                Intent productIntent = new Intent(AdminMainActivity.this, AdminMainActivity.class);
-//                startActivity(productIntent);
-//                break;
-//            case R.id.nav_maintain:
-//                Intent maintainIntent = new Intent(AdminMainActivity.this, MainActivity.class);
-//                maintainIntent.putExtra("Admin", "Admin");
-//                startActivity(maintainIntent);
-//                break;
-//            case R.id.nav_logout:
-//                //Removes all saved user information. User has to log in again
-//                Paper.book().destroy();
-//
-//                Intent logoutIntent = new Intent(AdminMainActivity.this, StartActivity.class);
-//                logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(logoutIntent);
-//                break;
-//            default:
-//        }
-        if (id == R.id.nav_home) {
-            Intent intent = new Intent(AdminMainActivity.this, AdminMainActivity.class);
-            startActivity(intent);
+        switch(id){
+            case R.id.nav_home:
+            case R.id.nav_product:
+                Intent intent = new Intent(AdminMainActivity.this, AdminMainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_orders:
+                Intent ordersIntent = new Intent(AdminMainActivity.this, AdminUserOrdersActivity.class);
+                startActivity(ordersIntent);
+                break;
+            case R.id.nav_maintain:
+                Intent maintainIntent = new Intent(AdminMainActivity.this, MainActivity.class);
+                maintainIntent.putExtra("Admin", "Admin");
+                startActivity(maintainIntent);
+                break;
+            case R.id.nav_logout:
+                //Removes all saved user information. User has to log in again
+                Paper.book().destroy();
 
-        } else if (id == R.id.nav_orders) {
-            Intent intent = new Intent(AdminMainActivity.this, AdminUserOrdersActivity.class);
-            startActivity(intent);
-
-        } else if (id == R.id.nav_product) {
-            Intent intent = new Intent(AdminMainActivity.this, AdminMainActivity.class);
-            startActivity(intent);
-
-        } else if (id == R.id.nav_maintain) {
-            Intent intent = new Intent(AdminMainActivity.this, MainActivity.class);
-            intent.putExtra("Admin", "Admin");
-            startActivity(intent);
-
-        } else if (id == R.id.nav_logout) {
-            //Removes all saved user information. User has to log in again
-            Paper.book().destroy();
-
-            Intent intent = new Intent(AdminMainActivity.this, StartActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+                Intent logoutIntent = new Intent(AdminMainActivity.this, StartActivity.class);
+                logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(logoutIntent);
+                break;
+            default:
         }
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

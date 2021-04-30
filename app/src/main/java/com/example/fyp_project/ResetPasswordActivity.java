@@ -56,12 +56,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         findPhoneNumber.setVisibility(View.GONE);
 
-
         //Check if user is coming from profile / login activity
         if (check.equals("profile")) {
-            pageTitle.setText("Set Questions");
+            pageTitle.setText(" Set Questions");
             securityQuestionsTitle.setText("Please set answers for the following security questions");
-            verifyButton.setText("Set");
+            verifyButton.setText("Set Answers");
 
             displayPreviousAnswers();
 

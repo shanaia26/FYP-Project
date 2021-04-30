@@ -32,8 +32,6 @@ public class CartActivity extends AppCompatActivity {
     private TextView orderMessage;
 
     private int overallTotalPrice = 0;
-
-    //Product & Order ID from Product Details Activity - after items are put in the cart
     private String productID;
 
     @Override
@@ -90,7 +88,7 @@ public class CartActivity extends AppCompatActivity {
                 int oneTypeProductPrice = ((Integer.parseInt(model.getPrice()))) * Integer.parseInt(model.getQuantity());
                 overallTotalPrice = (int) (overallTotalPrice + oneTypeProductPrice);
                 //Displaying the amount
-                totalPrice.setText("Total Price: €"+ String.valueOf(overallTotalPrice));
+                totalPrice.setText("Total Price: €" + String.valueOf(overallTotalPrice));
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -106,15 +104,9 @@ public class CartActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int i) {
                                 if (i == 0) {
-//                                    if (!category.equals("Customer Enquiry")) {
-                                        Intent intent = new Intent(CartActivity.this, ProductDetailsActivity.class);
-                                        intent.putExtra("productID", model.getProductID());
-                                        startActivity(intent);
-//                                    } else {
-//                                        Toast.makeText(CartActivity.this, "Item cannot be edited.", Toast.LENGTH_LONG).show();
-//                                        Intent intent = new Intent(CartActivity.this, CartActivity.class);
-//                                        startActivity(intent);
-//                                    }
+                                    Intent intent = new Intent(CartActivity.this, ProductDetailsActivity.class);
+                                    intent.putExtra("productID", model.getProductID());
+                                    startActivity(intent);
                                 }
                                 if (i == 1) {
                                     //Remove from User View
@@ -143,7 +135,6 @@ public class CartActivity extends AppCompatActivity {
 
                                     Intent intent = new Intent(CartActivity.this, MainActivity.class);
                                     startActivity(intent);
-
                                 }
                             }
                         });
@@ -163,41 +154,6 @@ public class CartActivity extends AppCompatActivity {
         recyclerCart.setAdapter(adapter);
         adapter.startListening();
     }
-
-//    private void CheckOrderState(){
-//        orderReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if(snapshot.exists()){
-//                    String shippingStatus = snapshot.child("shipmentStatus").getValue().toString();
-//                    String userName = snapshot.child("name").getValue().toString();
-//
-//                    if(shippingStatus.equals("Shipped")){
-//                        //Let user know their order has been shipped
-//                        totalPrice.setText(userName + " Your order has been shipped.");
-//                        recyclerCart.setVisibility(View.GONE);
-//
-//                        orderMessage.setVisibility(View.VISIBLE);
-//                        orderMessage.setText("Your order has been shipped.");
-//                        nextProcessButton.setVisibility(View.GONE);
-//                        Toast.makeText(CartActivity.this, "You can purchase more products once you have received your order.", Toast.LENGTH_LONG).show();
-//                    } else if (shippingStatus.equals("Order Not Shipped")){
-//                        //Let user know their order has not been shipped
-//                        totalPrice.setText("Shipping Status: Not Shipped");
-//                        recyclerCart.setVisibility(View.GONE);
-//
-//                        orderMessage.setVisibility(View.VISIBLE);
-//                        nextProcessButton.setVisibility(View.GONE);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
 
     @Override
     public void onBackPressed() {

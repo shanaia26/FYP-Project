@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fyp_project.Common.Common;
 import com.example.fyp_project.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,7 +32,7 @@ public class AdminMaintainProductsActivity extends AppCompatActivity {
 
     private ImageView maintainImage;
     private Button applyChangesButton;
-    private Button removeProductButton;
+    private TextView removeProductButton;
 
     //Get productID of item user clicked
     private String productID = "";
@@ -81,7 +83,7 @@ public class AdminMaintainProductsActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
 
-                    Toast.makeText(AdminMaintainProductsActivity.this, "The product has been removed successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AdminMaintainProductsActivity.this, Common.ProductRemovedSuccessKey, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -106,7 +108,7 @@ public class AdminMaintainProductsActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                    if(task.isSuccessful()){
-                       Toast.makeText(AdminMaintainProductsActivity.this, "Changes applied successfully.", Toast.LENGTH_LONG).show();
+                       Toast.makeText(AdminMaintainProductsActivity.this, Common.ChangesSuccessKey, Toast.LENGTH_LONG).show();
 
                        Intent intent = new Intent(AdminMaintainProductsActivity.this, AdminMainActivity.class);
                        startActivity(intent);

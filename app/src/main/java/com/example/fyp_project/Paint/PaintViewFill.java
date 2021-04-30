@@ -24,9 +24,6 @@ import java.util.ArrayList;
 
 public class PaintViewFill extends View {
 
-    public static int BRUSH_SIZE = 10;
-    private int strokeWidth;
-
     private Bitmap bitmap;
     private Bitmap bitmapSrc;
     private Canvas canvas;
@@ -36,27 +33,8 @@ public class PaintViewFill extends View {
 
     private ArrayList<FingerPath> paths = new ArrayList<>();
 
-    private float positionX;
-    private float positionY;
-    private float refX;
-    private float refY;
-    private ScaleGestureDetector scaleDetector;
-    private float scaleFactor = 1.0f;
-    private final static float minZoon = 1.0f;
-    private final static float maxZoom = 5.0f;
-
-    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener{
-        public boolean onScale(ScaleGestureDetector detector) {
-            scaleFactor += detector.getScaleFactor();
-            scaleFactor = Math.max(scaleFactor, Math.min(scaleFactor, maxZoom));
-            invalidate();
-            return true;
-        }
-    }
-
     public PaintViewFill(Context context, AttributeSet attrs) {
         super(context, attrs);
-        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
         path = new Path();
         bitmapPaint = new Paint(Paint.DITHER_FLAG);
 
@@ -72,26 +50,10 @@ public class PaintViewFill extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldW, int oldH) {
         super.onSizeChanged(w, h, oldW, oldH);
-//        if (bitmap == null) {
         bitmapSrc = BitmapFactory.decodeResource(getResources(), R.drawable.design_background)
                 .copy(Bitmap.Config.ARGB_8888, true);
         bitmap = Bitmap.createScaledBitmap(bitmapSrc, w, h, false);
         canvas = new Canvas(bitmap);
-//            for (int i = 0; i < bitmap.getWidth(); i++) {
-//                for (int j = 0; j < bitmap.getHeight(); j++) {
-//                    int alpha = 255 - brightness(bitmap.getPixel(i, j));
-//                    if (alpha < 300) {
-//                        bitmap.setPixel(i, j, Color.WHITE);
-//                    } else {
-//                        bitmap.setPixel(i, j, Color.BLACK);
-//                    }
-//                }
-//            }
-//        }
-//            if (defaultBitmap == null) {
-//                defaultBitmap = Bitmap.createBitmap(bitmap);
-//            }
-//        }
     }
 
 
@@ -103,9 +65,6 @@ public class PaintViewFill extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.save();
-
-        canvas.translate(positionX, positionY);
-        canvas.scale(scaleFactor, scaleFactor);
         canvas.drawBitmap(bitmap, 0, 0, bitmapPaint);
         canvas.restore();
     }
@@ -113,25 +72,7 @@ public class PaintViewFill extends View {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        scaleDetector.onTouchEvent(event);
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                refX = event.getX();
-                refY = event.getY();
-                paint((int)((refX - positionX)/scaleFactor), (int)((refY - positionY)/scaleFactor));
-                //invalidate();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                float fX = event.getX();
-                float fY = event.getY();
-
-                positionX += fX - refX;
-                positionY += fY - refY;
-                refX = fX;
-                refY = fY;
-                invalidate();
-                break;
-        }
+        paint((int) event.getX(), (int) event.getY());
         return true;
     }
 
@@ -161,15 +102,11 @@ public class PaintViewFill extends View {
             invalidate();
         }
     }
-//
-//    public Bitmap getBitmap() {
-//        this.setDrawingCacheEnabled(true);
-//        this.buildDrawingCache();
-//        Bitmap bmp = Bitmap.createBitmap(this.getDrawingCache());
-//        this.setDrawingCacheEnabled(false);
-//
-//        return bmp;
-//    }
+
+    // this methods returns the current bitmap
+    public Bitmap save() {
+        return bitmap;
+    }
 
     //Sets the colour as the colour user chose
     public void setPathColor(int colour) {

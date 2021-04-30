@@ -63,11 +63,6 @@ public class CheckoutActivity extends AppCompatActivity {
                         .child(Common.currentUser.getPhone())
                         .child(orderID);
 
-//                final DatabaseReference adminOrderReference = FirebaseDatabase.getInstance().getReference()
-//                        .child("Admin Orders")
-//                        .child(Common.currentUser.getPhone())
-//                        .child(orderID);
-
                 HashMap<String, Object> orderMap = new HashMap<>();
                 orderMap.put("overallTotal", String.valueOf(overallTotal));
 
@@ -76,33 +71,39 @@ public class CheckoutActivity extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-//                                adminOrderReference
-//                                        .updateChildren(orderMap)
-//                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                            @Override
-//                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    //Go to Stripe Payment
-                                                    Intent intent = new Intent(CheckoutActivity.this, StripePaymentActivity.class);
-                                                    intent.putExtra("overallTotal", String.valueOf(overallTotal));
-                                                    intent.putExtra("orderID", orderID);
-                                                    intent.putExtra("productID", productID);
-                                                    startActivity(intent);
-                                                }
-                                            }
-                                        });
+                                if (task.isSuccessful()) {
+                                    //Go to Stripe Payment
+                                    Intent intent = new Intent(CheckoutActivity.this, StripePaymentActivity.class);
+                                    intent.putExtra("overallTotal", String.valueOf(overallTotal));
+                                    intent.putExtra("orderID", orderID);
+                                    intent.putExtra("productID", productID);
+                                    startActivity(intent);
+                                }
                             }
                         });
             }
-//        });
-//    }
+        });
+    }
 
-    //Remove from DB if user does not finish the transaction
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(CheckoutActivity.this, ShipmentActivity.class);
-        startActivity(intent);
+        //Remove from Order History DB
+        final DatabaseReference orderHistoryReference = FirebaseDatabase.getInstance().getReference()
+                .child("Order History")
+                .child(Common.currentUser.getPhone())
+                .child(orderID);
+
+        orderHistoryReference
+                .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Intent intent = new Intent(CheckoutActivity.this, ShipmentActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
 }

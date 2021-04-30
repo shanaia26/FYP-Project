@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="2dp"
             android:layout_marginLeft="5dp"
-            android:text="USER ORDERS"
+            android:text=" USER ORDERS"
             android:textColor="@color/colorPrimary"
             android:textSize="22dp"
             android:drawableLeft="@drawable/people_icon"/>

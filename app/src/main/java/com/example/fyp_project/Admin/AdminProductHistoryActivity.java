@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.example.fyp_project.Model.Cart;
 import com.example.fyp_project.R;
 import com.example.fyp_project.ViewHolder.CartViewHolder;
+import com.example.fyp_project.ViewHolder.ProductHistoryViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -56,21 +57,23 @@ public class AdminProductHistoryActivity extends AppCompatActivity {
                 .setQuery(cartListReference, Cart.class)
                 .build();
 
-        FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter =
-                new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
+        FirebaseRecyclerAdapter<Cart, ProductHistoryViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Cart, ProductHistoryViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull Cart model) {
-                        holder.textProductQuantity.setText("Quantity: " + model.getQuantity());
-                        holder.textProductPrice.setText("Price: €" + model.getPrice());
-                        holder.textProductSize.setText("UK Size: " + model.getSize());
-                        holder.textProductName.setText(model.getProductName());
+                    protected void onBindViewHolder(@NonNull ProductHistoryViewHolder holder, int position, @NonNull Cart model) {
+                        holder.productHistoryOrderID.setText("Order ID: " + model.getOrderID());
+                        holder.productHistoryShipmentStatus.setText("Shipment Status: " + model.getShipmentStatus());
+                        holder.productHistoryProductName.setText(model.getProductName());
+                        holder.productHistoryPrice.setText("Price: €" + model.getPrice());
+                        holder.productHistorySize.setText("Size: " + model.getSize());
+                        holder.productHistoryQuantity.setText("Quantity: " + model.getQuantity());
                     }
 
                     @NonNull
                     @Override
-                    public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_item_layout, parent, false);
-                        CartViewHolder holder = new CartViewHolder(view);
+                    public ProductHistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_order_history_layout, parent, false);
+                        ProductHistoryViewHolder holder = new ProductHistoryViewHolder(view);
                         return holder;
                     }
                 };
