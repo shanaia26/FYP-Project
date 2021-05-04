@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fyp_project.Interface.ItemClickListener;
 import com.example.fyp_project.R;
+import com.github.chrisbanes.photoview.PhotoView;
 
 public class ProductHistoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 

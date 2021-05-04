@@ -84,7 +84,7 @@ public class AdminProductHistoryActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(AdminProductHistoryActivity.this, AdminOrderHistoryActivity.class);
+        Intent intent = new Intent(AdminProductHistoryActivity.this, AdminMainActivity.class);
         startActivity(intent);
         finish();
     }

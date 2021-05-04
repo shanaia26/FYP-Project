@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.fyp_project.Common.Common;
 import com.example.fyp_project.Model.Products;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -29,14 +30,12 @@ import java.util.HashMap;
 
 public class ProductDetailsActivity extends AppCompatActivity {
     private Button addProductCartButton;
-    private ImageView productImageDetails;
+    private PhotoView productImageDetails;
     private ElegantNumberButton elegantNumberButton;
     private TextView nameDetails;
     private TextView descriptionDetails;
     private TextView priceDetails;
     private TextView sizeDetails;
-
-    private DatabaseReference orderReference;
 
     //Get productID of item user clicked
     private String productID = "";

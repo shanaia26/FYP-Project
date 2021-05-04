@@ -88,7 +88,7 @@ public class AdminCustomerEnquiriesActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(AdminCustomerEnquiriesActivity.this, AdminUserOrdersViewHolder.class);
+        Intent intent = new Intent(AdminCustomerEnquiriesActivity.this, AdminMainActivity.class);
         startActivity(intent);
         finish();
     }

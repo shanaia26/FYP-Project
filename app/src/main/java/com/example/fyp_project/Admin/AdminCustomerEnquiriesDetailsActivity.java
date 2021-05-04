@@ -85,7 +85,7 @@ public class AdminCustomerEnquiriesDetailsActivity extends AppCompatActivity {
                             NotificationManagerCompat.from(AdminCustomerEnquiriesDetailsActivity.this);
                     notificationManagerCompat.notify(1, notificationBuilder.build());
 
-                    //Toast.makeText(AdminCustomerEnquiriesDetailsActivity.this, message, Toast.LENGTH_LONG).show();
+                    Toast.makeText(AdminCustomerEnquiriesDetailsActivity.this, message, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(AdminCustomerEnquiriesDetailsActivity.this, AdminMainActivity.class);
                     startActivity(intent);
                 }
@@ -118,7 +118,7 @@ public class AdminCustomerEnquiriesDetailsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(AdminCustomerEnquiriesDetailsActivity.this, AdminCustomerEnquiriesActivity.class);
+        Intent intent = new Intent(AdminCustomerEnquiriesDetailsActivity.this, AdminMainActivity.class);
         startActivity(intent);
         finish();
     }

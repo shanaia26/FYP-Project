@@ -40,7 +40,7 @@
         android:textSize="14dp"
         android:textStyle="italic" />
 
-    <ImageView
+    <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/details_image"
         android:layout_width="350dp"
         android:layout_height="320dp"

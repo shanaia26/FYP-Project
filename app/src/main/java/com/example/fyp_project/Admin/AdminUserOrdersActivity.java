@@ -19,6 +19,8 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.ref.Reference;
+
 public class AdminUserOrdersActivity extends AppCompatActivity {
 
     private RecyclerView recyclerUsers;
@@ -53,10 +55,11 @@ public class AdminUserOrdersActivity extends AppCompatActivity {
                 holder.userOrderPhone.setText("Phone Number: " + model.getPhone());
                 holder.userOrderEmail.setText("Email: " + model.getEmail());
 
+                String userID = getRef(position).getKey();
+
                 holder.showAllOrdersButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String userID = model.getPhone();
                         Intent intent = new Intent(AdminUserOrdersActivity.this, AdminOrderHistoryActivity.class);
                         intent.putExtra("userID",userID);
                         startActivity(intent);
@@ -66,7 +69,6 @@ public class AdminUserOrdersActivity extends AppCompatActivity {
                 holder.showEnquiriesButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String userID = model.getPhone();
                         Intent intent = new Intent(AdminUserOrdersActivity.this, AdminCustomerEnquiriesActivity.class);
                         intent.putExtra("userID",userID);
                         startActivity(intent);

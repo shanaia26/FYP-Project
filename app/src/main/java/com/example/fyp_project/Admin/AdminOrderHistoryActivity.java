@@ -139,7 +139,7 @@ public class AdminOrderHistoryActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(AdminOrderHistoryActivity.this, AdminUserOrdersActivity.class);
+        Intent intent = new Intent(AdminOrderHistoryActivity.this, AdminMainActivity.class);
         startActivity(intent);
         finish();
     }
